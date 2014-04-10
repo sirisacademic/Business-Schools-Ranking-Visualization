@@ -6,7 +6,9 @@ import json
 
 schools = dict()
 key_field_name = 'School name'
+country_field_name = 'Country'
 key_field_column = -1
+country_field_column = -1
 
 def parseFile(file):
   print("Reading file " + file)  
@@ -37,6 +39,10 @@ def parseFile(file):
 
           if cell.contents[0] == key_field_name:
             key_field_column = i
+          
+          if cell.contents[0] == country_field_name:
+            country_field_column = i
+
 
         # writer.writerow(csv_row)
 
@@ -47,9 +53,17 @@ def parseFile(file):
         # print("autoheight is 0")
         school = {}
         cells = row.findAll('cell')
+        country = ''
         # for column in cells:
         for i in range(0, len(cells)):
+          if i == key_field_column:
+            continue
+
           column = cells[i]
+
+          if i == country_field_column:
+            country = pyUtils.returnNormalText(column.data.contents[0])
+          
           dataType = column.data['ss:Type'.lower()]
           if len(column.data.contents) == 0:            
             if dataType.lower() == 'number':
@@ -69,7 +83,7 @@ def parseFile(file):
               school[headers[i]] = pyUtils.returnNormalText(content)
 
         # writer.writerow(csv_row)
-        addSchoolData(cells[key_field_column].data.contents[0], year, school)
+        addSchoolData(cells[key_field_column].data.contents[0], year, country, school)
 
     # print("Row num: " + str(row_num))
     row_num = row_num + 1
@@ -77,12 +91,13 @@ def parseFile(file):
   
   # file.close()
 
-def addSchoolData(schoolName, year, data):
+def addSchoolData(schoolName, year, country, data):
   if schoolName not in schools:    
     schools[schoolName] = {}
 
   value = schools[schoolName]
   value[year] = data
+  value['country'] = country
 
   schools[schoolName] = value
 
@@ -96,6 +111,12 @@ def buildFinalObj():
   for key in schools:
     obj = {}
     obj['name'] = key
+
+    if key == "ESCP Europe":
+      obj['country'] = 'France'
+    else:  
+      obj['country'] = schools[key]['country']
+
     obj['data'] = schools[key]
     # for years in schools[key]:
     #   obj[years] = schools[key][years]
@@ -106,10 +127,19 @@ def buildFinalObj():
 
 if __name__ == "__main__":
   print("Parser of Excel XMLs by @vpascual\n")
-  list_of_files = pyUtils.getListOfFilesFromPath('data/global-mba-rankings/', '', '.xml')  
-  # list_of_files = pyUtils.getListOfFilesFromPath('data/masters_in_management/', '', '.xml')  
 
-  output_file = open(pyUtils.getFileNameWithoutExtension('global') + '.json', 'wb')
+  if len(sys.argv) < 3:
+    sys.exit("Not enough params. Usage: python xml2json [source_folder] [output_file_name]")
+
+  source_folder = sys.argv[1]
+  filename = sys.argv[2]
+  # list_of_files = pyUtils.getListOfFilesFromPath('data/global-mba-rankings/', '', '.xml')  
+  list_of_files = pyUtils.getListOfFilesFromPath(source_folder, '', '.xml')  
+
+  if len(list_of_files) <=0:
+    sys.exit("ERROR: Can't find xml files")
+
+  output_file = open(filename, 'wb')
   # writer = csv.writer(output_file, delimiter=';', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
   for f in list_of_files:
     parseFile(f)
