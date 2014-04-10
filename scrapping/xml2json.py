@@ -89,7 +89,7 @@ def parseFile(file):
     row_num = row_num + 1
 
   
-  # file.close()
+  # file.close()  
 
 def addSchoolData(schoolName, year, country, data):
   if schoolName not in schools:    
@@ -112,6 +112,7 @@ def buildFinalObj():
     obj = {}
     obj['name'] = key
 
+    # ESCP Europe is set to different countries: France, U.K., Germany, Spain, Italy
     if key == "ESCP Europe":
       obj['country'] = 'France'
     else:  
