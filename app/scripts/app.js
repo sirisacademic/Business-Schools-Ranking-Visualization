@@ -1,6 +1,6 @@
 'use strict';
 
-angular
+var module = angular
   .module('businessSchoolsApp', [
     'ngResource',
     'ngRoute'
@@ -9,9 +9,18 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+          data: ['$http', function($http) {
+            return $http.get('data/output.json').then(function(response) {
+              // console.log(response.data)
+              return response.data;
+            })
+          }
+          ]
+        }
       })
-      .otherwise({
-        redirectTo: '/'
-      });
+    .otherwise({
+      redirectTo: '/'
+    });
   });

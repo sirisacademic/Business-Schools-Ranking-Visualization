@@ -76,7 +76,7 @@ def parseFile(file):
           else:
             if dataType.lower() == 'number':
               # csv_row.append(column.data.contents[0].replace(',', '.'))
-              school[headers[i]] = column.data.contents[0].replace(',', '.')
+              school[headers[i]] = float(column.data.contents[0].replace(',', '.'))
             else:
               content = column.data.contents[0]
               # csv_row.append(pyUtils.returnNormalText(content))   

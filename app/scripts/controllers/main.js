@@ -1,10 +1,7 @@
 'use strict';
 
 angular.module('businessSchoolsApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('MainCtrl', function ($scope, data) {
+    console.log(data)
+    $scope.data = data
   });
