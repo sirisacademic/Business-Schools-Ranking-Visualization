@@ -17,7 +17,7 @@ angular.module('businessSchoolsApp')
 
         var data = [];
         scope.$watch('data', function() {
-          console.log(scope.data);
+          // console.log(scope.data);
           data = scope.data;
           // data = [data[0], data[1], data[2]]
           draw();
@@ -32,7 +32,12 @@ angular.module('businessSchoolsApp')
             width = 960 - margin.left - margin.right,
             height = 420 - margin.top - margin.bottom;
               
+        d3.select('#details')
+          .style("width", width - margin.left - margin.right - 30 + "px")
+          .style("margin-left", margin.left +10 + "px");
 
+        d3.select('#ranking_table')
+          .style("width", width - margin.left - margin.right - 30 + "px");
 
         var tooltip = d3.select("#tooltip")
             .style("visibility", "hidden")
@@ -101,7 +106,7 @@ angular.module('businessSchoolsApp')
             return d.country;
           })));
 
-          console.log(countries)
+          // console.log(countries)
 
           d3.select("#countriesCombo")
             .on( "change", function(d) {
@@ -124,9 +129,9 @@ angular.module('businessSchoolsApp')
 
           strokeWidth = height / nElements;
 
-          d3.selectAll("table")
-            .style("width", (width - 33) + "px")
-            .style("padding-left", "55px")
+          // d3.selectAll("table")
+          //   .style("width", (width - 33) + "px")
+          //   .style("padding-left", "55px")
 
           // sortedKeys = d3.keys(data[0]).sort(function(a,b) {
           //   a = (a == "University") ? 100 : a;
@@ -213,7 +218,7 @@ angular.module('businessSchoolsApp')
               //     background.attr("visibility", "hidden");
               //   })
               //   .on("drag", function(d) {
-              //     dragging[d] = Math.min(w, Math.max(0, this.__origin__ += d3.event.dx));
+              //     dragging[d] = Math.min(width, Math.max(0, this.__origin__ += d3.event.dx));
               //     foreground.attr("d", path)
               //               .attr("stroke-width", strokeWidth);
               //     dimensions.sort(function(a, b) { return position(a) - position(b); });
@@ -299,13 +304,10 @@ angular.module('businessSchoolsApp')
         }
 
         function filterByCountry() {  
-          console.log("******** filterByCountry");
           var currentlyVisible = foreground.filter(function() {
-            console.log(d3.select(this).style("display"))
+            // console.log(d3.select(this).style("display"))
             return d3.select(this).style("display") != "none";
           });
-
-          console.dir(currentlyVisible)
 
           foreground.style("display", function(d) {
             return currentlyVisible.every(function(p, i) {  
@@ -326,7 +328,6 @@ angular.module('businessSchoolsApp')
 
         // Handles a brush event, toggling the display of foreground lines.
         function brush() {
-          console.log("******** BRUSH");
           var actives = getActiveDimensions(),
               extents = actives.map(function(p) { return y[p].brush.extent(); });
 
