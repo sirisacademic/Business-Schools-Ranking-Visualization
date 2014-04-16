@@ -182,8 +182,6 @@ angular.module('businessSchoolsApp')
                   var sel = d3.select(this);
                   sel.moveToFront();
 
-                  // console.log(d)
-
                   var circles = d3.selectAll(".circleText")
                     .attr("display", true)
                     .attr("transform", function(p){              
