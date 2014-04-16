@@ -23,11 +23,12 @@ def parseFile(file):
   headers_row_num = -1
   found_headers = False
   for row in rows:
+    autofitheight = row.get('ss:AutoFitHeight'.lower(), '')
     # print(row)
     csv_row = []
     styleId = row.get('ss:styleid', '')    
     if found_headers is False:      
-      if styleId == 's5':
+      if styleId == 's5' and autofitheight == '0':
         found_headers = True
         # headers_row_num = i
         cells = row.findAll('data')
@@ -47,7 +48,7 @@ def parseFile(file):
         # writer.writerow(csv_row)
 
     else:
-      autofitheight = row.get('ss:AutoFitHeight'.lower(), '')
+      
       # print("autofitheight: " + autofitheight)
       if autofitheight == "0":
         # print("autoheight is 0")

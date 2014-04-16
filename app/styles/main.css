@@ -77,3 +77,95 @@ body {
     border-bottom: 0;
   }
 }
+
+.background path {
+  fill: none;
+  stroke: #ccc;
+  stroke-opacity: .4;
+  shape-rendering: crispEdges;
+}
+
+.foreground path {
+  fill: none;
+  /*stroke: steelblue;*/
+  stroke-opacity: .7;  
+}
+
+.active {
+  fill: none;
+  stroke: red;
+  stroke-opacity: .7;
+}
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+.axis line, .axis path {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  text-shadow: 0 1px 0 #fff;
+  cursor: move;
+}
+
+#results {
+  width: 960px;
+  
+}
+
+#container {
+ position: absolute;
+}
+
+#tooltip {
+  background-color: "#ffffff";
+  position: absolute;
+}
+
+table {  
+  padding-bottom: 30px;
+  font-size: 13px;
+  color: #111;
+}
+
+table td {
+  height: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.centeredTd 
+{
+    text-align:center; 
+    vertical-align:middle;
+    color: #343434;
+    width: 35px;
+    /*font-size: 15px;    */
+}
+
+
+#logo {
+  width: 100px;
+  height: 62px;
+  margin-top: 13px;
+  float: right;
+}
+
+svg {
+  font: 10px sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: steelblue;
+}
+
+body {
+  font: 14px sans-serif;
+}
