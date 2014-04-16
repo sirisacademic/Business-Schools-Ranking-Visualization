@@ -192,7 +192,7 @@ angular.module('businessSchoolsApp')
 
                   circles.selectAll("text")
                     .text(function(p) {
-                      return (d[p] == 101) ? "-" : getValue(d, p) + ""
+                      return (getValue(d, p) == 101) ? "-" : getValue(d, p) + ""
                     })
               })
               .on("mousemove", function(){
