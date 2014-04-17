@@ -8,7 +8,6 @@ angular.module('businessSchoolsApp')
 
     d3.selectAll("li")
       .on("click", function(d) {
-        console.log(this)
-        console.log(d)
+        console.log(d3.select(this).text())
       })
   });

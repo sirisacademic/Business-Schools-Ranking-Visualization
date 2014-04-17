@@ -333,16 +333,15 @@ angular.module('businessSchoolsApp')
             return d3.select(this).style("display") != "none";
           }).data();         
 
-          if(!scope.$$phase) scope.$apply(); 
+          if(!scope.$$phase) scope.$apply();
+
+          d3.select("#numResults")
+              .text(scope.activeRows.length + " institutions match the criteria");
           
           // console.log("filtered")
           //console.log(filtered.length)
 
           //dataTable.fnClearTable();
-          
-        }
-
-        function setTable(activeRows) { 
           
         }
 
