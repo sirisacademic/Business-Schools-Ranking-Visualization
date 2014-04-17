@@ -28,23 +28,11 @@ angular.module('businessSchoolsApp')
           return (!(year in d.data)) ? 101 : d.data[year]['Current rank']
         }
 
-        var margin = { top: 30, right: 10, bottom: 10, left: 10 },
-            width = 960 - margin.left - margin.right,
-            height = 420 - margin.top - margin.bottom;
-
-        scope.width = width;
-        scope.height = height;
-        scope.margin = margin;        
-              
-        d3.select('#details')
-          .style("width", width - margin.left - margin.right - 30 + "px")
-          .style("margin-left", margin.left + 10 + "px");
-
         var tooltip = d3.select("#tooltip")
             .style("visibility", "hidden")
             .style("background-color", "#ffffff");
 
-        var x = d3.scale.ordinal().rangePoints([0, width], 1),
+        var x = d3.scale.ordinal().rangePoints([0, scope.width], 1),
             y = {},
             dragging = {};        
 
@@ -63,10 +51,10 @@ angular.module('businessSchoolsApp')
             foreground;
 
         var svg = d3.select(element[0]).append("svg")
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', scope.width + scope.margin.left + scope.margin.right)
+            .attr('height', scope.height + scope.margin.top + scope.margin.bottom)
           .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')          
+            .attr('transform', 'translate(' + scope.margin.left + ',' + scope.margin.top + ')')          
 
         var filtered, 
             countries, 
@@ -88,7 +76,7 @@ angular.module('businessSchoolsApp')
           scope.dimensions.forEach(function(d) {
             y[d] = d3.scale.linear()        
                 .domain([1, 101])
-                .range([0, height]);
+                .range([0, scope.height]);
           })
             
           data.sort(function(a, b) {
@@ -132,10 +120,12 @@ angular.module('businessSchoolsApp')
               .text(function(d) { return d;})     
 
           var nElements = data.length,
-              strokeWidth = height / nElements,
+              strokeWidth = scope.height / nElements,
               color = d3.scale.category20();
 
-          strokeWidth = height / nElements;          
+          console.log("strokeWidth: " + strokeWidth)
+
+          strokeWidth = (scope.height / nElements) * 0.8;          
 
           // Add grey background lines for context.
           background = svg.append("svg:g")
@@ -197,7 +187,7 @@ angular.module('businessSchoolsApp')
               //     background.attr("visibility", "hidden");
               //   })
               //   .on("drag", function(d) {
-              //     dragging[d] = Math.min(width, Math.max(0, this.__origin__ += d3.event.dx));
+              //     dragging[d] = Math.min(scope.width, Math.max(0, this.__origin__ += d3.event.dx));
               //     foreground.attr("d", path)
               //               .attr("stroke-width", strokeWidth);
               //     scope.dimensions.sort(function(a, b) { return position(a) - position(b); });

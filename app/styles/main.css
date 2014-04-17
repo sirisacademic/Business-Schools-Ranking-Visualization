@@ -136,8 +136,7 @@ tr {
   overflow: auto;
 }
 
-.centeredTd 
-{
+.centeredTd {
     text-align:center; 
     vertical-align:middle;
     color: #343434;
