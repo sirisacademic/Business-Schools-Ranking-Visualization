@@ -66,17 +66,11 @@ angular.module('businessSchoolsApp')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
           .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-          .on("click", function() {
-            console.log("Click")
-            scope.activeRows = "Hola"
-          });        
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')          
 
         var filtered, 
             countries, 
-            selectedCountry = "All",
-            sortedKeys = [],
-            dimensions;
+            selectedCountry = "All";
 
         d3.selection.prototype.moveToFront = function() {
             return this.each(function(){
@@ -88,16 +82,29 @@ angular.module('businessSchoolsApp')
         // d3.csv("shanghai_ranking.csv", function(data) {
         function draw() {
 
-          // Extract the list of dimensions and create a scale for each.
-          dimensions = d3.range(1999,2015);
-          x.domain(dimensions);
-          dimensions.forEach(function(d) {
+          // Extract the list of scope.dimensions and create a scale for each.
+          scope.dimensions = d3.range(1999,2015);
+          x.domain(scope.dimensions);
+          scope.dimensions.forEach(function(d) {
             y[d] = d3.scale.linear()        
                 .domain([1, 101])
                 .range([0, height]);
           })
             
-
+          data.sort(function(a, b) {
+            var aValue, bValue;
+            if (a.data['2014'] == undefined && b.data['2014'] == undefined) {
+              aValue = bValue = 0;
+              scope.dimensions.forEach(function(d) {
+                aValue += (a.data[d] == undefined) ? 1000 : a.data[d]['Current rank'];
+                bValue += (b.data[d] == undefined) ? 1000 : b.data[d]['Current rank'];
+              })
+            } else {
+              aValue = (a.data['2014'] == undefined) ? 101 : a.data['2014']['Current rank'];
+              bValue = (b.data['2014'] == undefined) ? 101 : b.data['2014']['Current rank'];
+            }
+            return aValue - bValue;
+          })
           // data.sort(function(a,b) {
           //     return a["2013"] - b["2013"];
           //   });
@@ -128,34 +135,7 @@ angular.module('businessSchoolsApp')
               strokeWidth = height / nElements,
               color = d3.scale.category20();
 
-          strokeWidth = height / nElements;
-
-          // d3.selectAll("table")
-          //   .style("width", (width - 33) + "px")
-          //   .style("padding-left", "55px")
-
-          // sortedKeys = d3.keys(data[0]).sort(function(a,b) {
-          //   a = (a == "University") ? 100 : a;
-          //   b = (b == "University") ? 100 : b;
-          //   a = (a == "Country") ? 1000 : a;
-          //   b = (b == "") ? 1000 : b;
-
-          //   return a-b;
-          // });
-          scope.sortedKeys = sortedKeys = d3.keys(data[0]);
-
-          d3.selectAll("thead tr").selectAll("th")
-            .data(sortedKeys)
-            .enter()
-            .append("th")
-            .attr("class", function(d, i) {
-              if (d != "University")
-                return "centeredTd";
-              else
-                return null;
-            })
-            .style("background-color", "#eeeeee")
-              .text(function(d) { return d; })
+          strokeWidth = height / nElements;          
 
           // Add grey background lines for context.
           background = svg.append("svg:g")
@@ -207,7 +187,7 @@ angular.module('businessSchoolsApp')
 
           // Add a group element for each dimension.
           var g = svg.selectAll(".dimension")
-              .data(dimensions)
+              .data(scope.dimensions)
             .enter().append("svg:g")
               .attr("class", "dimension")
               .attr("transform", function(d) { return "translate(" + x(d) + ")"; })
@@ -220,8 +200,8 @@ angular.module('businessSchoolsApp')
               //     dragging[d] = Math.min(width, Math.max(0, this.__origin__ += d3.event.dx));
               //     foreground.attr("d", path)
               //               .attr("stroke-width", strokeWidth);
-              //     dimensions.sort(function(a, b) { return position(a) - position(b); });
-              //     x.domain(dimensions);
+              //     scope.dimensions.sort(function(a, b) { return position(a) - position(b); });
+              //     x.domain(scope.dimensions);
               //     g.attr("transform", function(d) { return "translate(" + position(d) + ")"; })
               //   })
               //   .on("dragend", function(d) {
@@ -244,7 +224,7 @@ angular.module('businessSchoolsApp')
           g.append("svg:g")
               .attr("class", "axis")
               .each(function(d, i) {
-                if (i == (dimensions.length - 1))
+                if (i == (scope.dimensions.length - 1))
                   return d3.select(this).call(axisRight.scale(y[d]));
                 else if (i == 0) 
                   d3.select(this).call(axisLeft.scale(y[d])); 
@@ -265,7 +245,7 @@ angular.module('businessSchoolsApp')
               .attr("width", 16);
 
           var circleElements = svg.selectAll("g circleText")
-              .data(dimensions)
+              .data(scope.dimensions)
               .enter()
               .append("g")
                 .attr("class", "circleText")
@@ -299,7 +279,7 @@ angular.module('businessSchoolsApp')
 
         // Returns the path for a given data point.
         function path(d) {
-          return line(dimensions.map(function(p) { return [position(p), y[p](getValue(d, p))]; }));          
+          return line(scope.dimensions.map(function(p) { return [position(p), y[p](getValue(d, p))]; }));          
         }
 
         function filterByCountry() {  
@@ -322,7 +302,7 @@ angular.module('businessSchoolsApp')
         }
 
         function getActiveDimensions() {
-          return dimensions.filter(function(p) { return !y[p].brush.empty(); })
+          return scope.dimensions.filter(function(p) { return !y[p].brush.empty(); })
         }
 
         // Handles a brush event, toggling the display of foreground lines.

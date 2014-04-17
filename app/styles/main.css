@@ -121,7 +121,7 @@ body {
 
 table {  
   padding-bottom: 30px;
-  font-size: 13px;
+  font-size: 10px;
   color: #111;
 }
 
@@ -141,7 +141,7 @@ tr {
     text-align:center; 
     vertical-align:middle;
     color: #343434;
-    width: 35px;
+    /*width: 25px;*/
     /*font-size: 15px;    */
 }
 
@@ -163,6 +163,6 @@ a {
 }
 
 body {
-  font: 14px sans-serif;
+  font: 12px sans-serif;
 }
 
