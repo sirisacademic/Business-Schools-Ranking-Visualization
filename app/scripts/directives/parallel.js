@@ -31,13 +31,14 @@ angular.module('businessSchoolsApp')
         var margin = { top: 30, right: 10, bottom: 10, left: 10 },
             width = 960 - margin.left - margin.right,
             height = 420 - margin.top - margin.bottom;
+
+        scope.width = width;
+        scope.height = height;
+        scope.margin = margin;        
               
         d3.select('#details')
           .style("width", width - margin.left - margin.right - 30 + "px")
-          .style("margin-left", margin.left +10 + "px");
-
-        d3.select('#ranking_table')
-          .style("width", width - margin.left - margin.right - 30 + "px");
+          .style("margin-left", margin.left + 10 + "px");
 
         var tooltip = d3.select("#tooltip")
             .style("visibility", "hidden")
@@ -45,11 +46,7 @@ angular.module('businessSchoolsApp')
 
         var x = d3.scale.ordinal().rangePoints([0, width], 1),
             y = {},
-            dragging = {};
-
-        var color = d3.scale.linear()
-            .domain([101, 1])
-            .range(["white", "#7BBF6A"]);
+            dragging = {};        
 
         var line = d3.svg.line()          
                   .interpolate("monotone"),
@@ -69,7 +66,11 @@ angular.module('businessSchoolsApp')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
           .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');        
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+          .on("click", function() {
+            console.log("Click")
+            scope.activeRows = "Hola"
+          });        
 
         var filtered, 
             countries, 
@@ -141,7 +142,7 @@ angular.module('businessSchoolsApp')
 
           //   return a-b;
           // });
-          sortedKeys = d3.keys(data[0]);
+          scope.sortedKeys = sortedKeys = d3.keys(data[0]);
 
           d3.selectAll("thead tr").selectAll("th")
             .data(sortedKeys)
@@ -346,61 +347,23 @@ angular.module('businessSchoolsApp')
         }
 
         function manageFilteredElements() {
+          // console.log("manageFilteredElements")
           // Get filtered elements
-          filtered = foreground.filter(function() {
+          scope.activeRows = foreground.filter(function() {
             return d3.select(this).style("display") != "none";
-          });
+          }).data();         
+
+          if(!scope.$$phase) scope.$apply(); 
+          
           // console.log("filtered")
           //console.log(filtered.length)
 
           //dataTable.fnClearTable();
-          if (filtered.length > 0) {
-            // convert the array of objects into an array of arrays
-            var r = [];
-            filtered.data().forEach(function(d, i) {
-              var array = [];
-              for (i = 0; i<sortedKeys.length; i++)
-                array.push(d[sortedKeys[i]])
-              
-              r.push(array);
-
-            });
-
-           //$('#results').dataTable().fnAddData(activeRows);
-            d3.select("#numResults")
-              .text(r.length + " institutions match the criteria");
-            setTable(r);
-          } else {
-            d3.select("tbody").selectAll("tr").remove();  
-            d3.select("#numResults")
-              .text("");
-          }
+          
         }
 
         function setTable(activeRows) { 
-          d3.select("tbody").selectAll("tr").remove();
-
-          var rows = d3.select("tbody").selectAll("tr")
-            .data(activeRows)
-            .enter()
-            .append("tr")
-            .style("background-color", function(d,i) {
-              return (i%2 == 0) ? "white" : "#F0F0F0";
-            });
-
-          // console.log(rows)
-
-          rows.selectAll("td")
-            .data(function(d, i) { return d; })
-            .enter()
-            .append("td")
-            .attr("class", function(d, i) {
-              return (i > 1) ? "centeredTd" : null;
-            })
-            .style("background-color", function(d, i) {  return color(d); })
-            .text(function(d, i) {
-              return (d == "101") ? "-" : d;
-            })
+          
         }
 
       }

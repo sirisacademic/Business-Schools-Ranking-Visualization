@@ -125,7 +125,16 @@ table {
   color: #111;
 }
 
+tr {
+   line-height: 25px;
+   min-height: 25px;
+   height: 25px;
+}
 
+#tablediv {
+  height: 300px;
+  overflow: auto;
+}
 
 .centeredTd 
 {
