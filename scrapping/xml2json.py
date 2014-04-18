@@ -64,6 +64,7 @@ def parseFile(file):
 
           if i == country_field_column:
             country = pyUtils.returnNormalText(column.data.contents[0])
+            continue
           
           dataType = column.data['ss:Type'.lower()]
           if len(column.data.contents) == 0:            
@@ -116,8 +117,17 @@ def buildFinalObj():
     # ESCP Europe is set to different countries: France, U.K., Germany, Spain, Italy
     if key == "ESCP Europe":
       obj['country'] = 'France'
-    else:  
-      obj['country'] = schools[key]['country']
+    else:
+      if schools[key]['country'] == 'U.S.A.' or schools[key]['country'] == 'USA' or schools[key]['country'] == 'US':
+        obj['country'] = 'U.S.'
+      else:
+        if schools[key]['country'] == 'Uk':
+          obj['country'] = 'U.K.'
+        else:
+          obj['country'] = schools[key]['country']
+
+    print(obj['country'])
+    schools[key].pop('country', None)
 
     obj['data'] = schools[key]
     # for years in schools[key]:
