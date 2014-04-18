@@ -23,18 +23,19 @@ angular.module('businessSchoolsApp')
           .classed("active", true)
         
         d3.select("#wrapper").remove();
+        d3.select("#vis")
+              .append("div")
+                .attr("id", "wrapper");
 
         switch (selected.text()) {
           case 'Weighted salary (US$)':
             console.log("Weighted selected");
-            
+            $scope.metric = selected.text();
+            $('#wrapper').append($compile("<linechart />")($scope));            
             break;
 
           case 'Ranking Evolution':
-            console.log("Ranking evolution")            
-            d3.select("#vis")
-              .append("div")
-                .attr("id", "wrapper");
+            console.log("Ranking evolution")                        
 
             $('#wrapper').append($compile("<tableview />")($scope));
             // d3.selectAll("#vis")              

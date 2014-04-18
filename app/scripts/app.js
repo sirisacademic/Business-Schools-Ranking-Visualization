@@ -12,7 +12,7 @@ var module = angular
         controller: 'MainCtrl',
         resolve: {
           data: ['$http', function($http) {
-            return $http.get('data/output.json').then(function(response) {
+            return $http.get('data/global.json').then(function(response) {
               // console.log(response.data)
               return response.data;
             })

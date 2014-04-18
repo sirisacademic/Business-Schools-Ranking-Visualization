@@ -165,3 +165,8 @@ body {
   font: 12px sans-serif;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1px;
+}

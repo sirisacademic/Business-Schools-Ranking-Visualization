@@ -21,6 +21,9 @@ angular.module('businessSchoolsApp')
           // data = [data[0], data[1], data[2]]          
         })
 
+        d3.select("#tablediv")
+          .attr("height", 300 + "px")
+
         d3.selectAll("thead tr").selectAll("th")
             .data(['Name', 'Country'].concat(scope.dimensions))
             .enter()

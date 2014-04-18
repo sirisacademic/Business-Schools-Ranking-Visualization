@@ -1,3 +1,6 @@
+# Usage
+# python xml2json.py data/global-mba-rankings global_ranking.json
+
 from bs4 import BeautifulSoup as Soup
 import csv
 import pyUtils
