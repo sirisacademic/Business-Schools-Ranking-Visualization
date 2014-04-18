@@ -3,12 +3,17 @@
 angular.module('businessSchoolsApp')
   .controller('MainCtrl', function ($scope, $compile, data) {
     $scope.data = data;
+    console.log(data)
     // Extract the list of scope.dimensions and create a scale for each.
     $scope.dimensions = d3.range(1999,2015);
 
-    $scope.margin = { top: 30, right: 10, bottom: 10, left: 10 };
+    $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
     $scope.width = 960 - $scope.margin.left - $scope.margin.right;
     $scope.height = 420 - $scope.margin.top - $scope.margin.bottom;
+
+    var tooltip = d3.select("#tooltip")
+            .style("visibility", "hidden")
+            .style("background-color", "#ffffff");
       
     d3.select('#tabbedpane')
       .style("width", $scope.width - $scope.margin.left - $scope.margin.right - 30 + "px")
@@ -27,21 +32,42 @@ angular.module('businessSchoolsApp')
               .append("div")
                 .attr("id", "wrapper");
 
-        switch (selected.text()) {
+        console.log(selected)
+        switch (selected.attr("value")) {
           case 'Weighted salary (US$)':
             console.log("Weighted selected");
-            $scope.metric = selected.text();
+            $scope.metric = selected.attr("value");
             $('#wrapper').append($compile("<linechart />")($scope));            
             break;
 
           case 'Ranking Evolution':
             console.log("Ranking evolution")                        
-
             $('#wrapper').append($compile("<tableview />")($scope));
             // d3.selectAll("#vis")              
             //   .append("div")
             //   .append($compile("<tableview />")($scope));
             $scope.$apply(); 
+            break;
+          case 'Value for money ratio':
+            $scope.metric = selected.attr("value");
+            $('#wrapper').append($compile("<linechart />")($scope));
+            break;
+          case 'Women faculty (%)':
+            $scope.metric = selected.attr("value");
+            $('#wrapper').append($compile("<linechart />")($scope));
+            break;
+          case 'Women students (%)':
+            $scope.metric = selected.attr("value");
+            $('#wrapper').append($compile("<linechart />")($scope));
+            break;
+          case 'Employed at three months (%)':
+            $scope.metric = selected.attr("value");
+            $('#wrapper').append($compile("<linechart />")($scope));
+            break;
+          case 'Salary percentage increase':
+            $scope.metric = selected.attr("value");
+            $('#wrapper').append($compile("<linechart />")($scope));
+            break;
         }
         // if (selected.text() == 'Weighted salary (US$)') {
         //   console.log("Weighted selected");

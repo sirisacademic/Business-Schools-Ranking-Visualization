@@ -23,14 +23,23 @@ angular.module('businessSchoolsApp')
           draw();
         })
 
+        scope.$watch('hover', function() {
+          var hoveredEdlement = data.hover;
+          if (hoveredEdlement == undefined)
+            return;
+
+          var ho = foreground.selectAll()
+            .data(hoveredEdlement);
+
+          console.log(ho)
+        })
+
         // Given a data object and a year (column) retrieves its value according to one metric (default is Current rank)
         function getValue(d, year) {
-          return (!(year in d.data)) ? 101 : d.data[year]['Current rank']
-        }
+          return (!(year in d.data)) ? 101 : d.data[year]['Current rank'];
+        }        
 
-        var tooltip = d3.select("#tooltip")
-            .style("visibility", "hidden")
-            .style("background-color", "#ffffff");
+        var tooltip = d3.select("#tooltip");
 
         var x = d3.scale.ordinal().rangePoints([0, scope.width], 1),
             y = {},
@@ -79,6 +88,7 @@ angular.module('businessSchoolsApp')
                 .range([0, scope.height]);
           })
             
+          // elements are sorted according their position in the ranking in 2014. If they are not on 2014's ranking, they are sorted according their sum of ranks along the rest of the years
           data.sort(function(a, b) {
             var aValue, bValue;
             if (a.data['2014'] == undefined && b.data['2014'] == undefined) {
@@ -139,7 +149,7 @@ angular.module('businessSchoolsApp')
           foreground = svg.append("svg:g")
               .attr("class", "foreground")
             .selectAll("path")
-              .data(data)
+              .data(data, function(d) { return d.name; })
             .enter().append("svg:path")
               .attr("d", path)
               .attr("stroke-width", strokeWidth)

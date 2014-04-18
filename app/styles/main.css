@@ -170,3 +170,9 @@ body {
   stroke: steelblue;
   stroke-width: 1px;
 }
+
+.linepath {
+  fill: none;
+  stroke: #87907D;
+  stroke-width: 1px;
+}

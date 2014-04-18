@@ -51,8 +51,10 @@ angular.module('businessSchoolsApp')
           console.log("Queden " + numLines)
         }
 
+        var tooltip = d3.select("#tooltip");
+
         var margin = {top: 20, right: 80, bottom: 20, left: 80},
-            width = 730 - margin.left - margin.right,
+            width = scope.width - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
         // var parseDate = d3.time.format("%d-%b-%y").parse;
@@ -72,6 +74,18 @@ angular.module('businessSchoolsApp')
                 return (p[scope.metric] == undefined) ? 0 : p[scope.metric];
               }));
             })]);
+          // var max = d3.max(data, function(d) {
+          //     return d3.max(d3.values(d.data).map(function(p) {    
+          //       return (p[scope.metric] == undefined) ? 0 : p[scope.metric];
+          //     }));
+          //   });
+
+          // var min = d3.min(data, function(d) {
+          //     return d3.min(d3.values(d.data).map(function(p) {    
+          //       return (p[scope.metric] == undefined) ? 0 : p[scope.metric];
+          //     }));
+          //   });
+          // y.domain([min, max]);
 
             console.log(y.domain());
         }
@@ -87,7 +101,11 @@ angular.module('businessSchoolsApp')
         var line = d3.svg.line()
             .x(function(d, i) { return x(scope.dimensions[i]); })
             .y(function(d) { return y(d); })
-            .interpolate("basis");;
+            .interpolate("monotone");
+
+        function path(d) {
+          return line(d.values);          
+        }
 
         // var zoom = d3.behavior.zoom()
         //     .on("zoom", draw);
@@ -107,12 +125,12 @@ angular.module('businessSchoolsApp')
         svg.append("g")
             .attr("class", "y axis")
             .call(yAxis)
-          .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", ".71em")
-            .style("text-anchor", "end")
-            .text("# tweets");
+          // .append("text")
+          //   .attr("transform", "rotate(-90)")
+          //   .attr("y", 6)
+          //   .attr("dy", ".71em")
+          //   .style("text-anchor", "end")
+          //   .text("# tweets");
 
         if (data.length > 0) {
           setYAxis();
@@ -120,20 +138,15 @@ angular.module('businessSchoolsApp')
         }
 
         function draw() {
-          // svg.select(".x")
-          //   .transition()
-          //   .duration(500)
-          //   .call(xAxis);
-          console.log("DRAWWWWIIIIING")
-
           svg.select(".y")
             .transition()
             .duration(500)
             .call(yAxis);
 
-          svg.selectAll(".line")
-            .data(data)
-            .enter()
+          var lines = svg.selectAll(".linepath")
+            .data(data, function(d) { return d.name });  
+
+          lines.enter()
               .append("path")
               .datum(function(d) {
                 var values = [];
@@ -143,46 +156,76 @@ angular.module('businessSchoolsApp')
                   else
                     values.push(0);
                 })
-
-                console.log(values)
-                return values;
+                d['values'] = values;
+                // console.log(d)
+                return d;
               })
-              .attr("class", "line")
-              .attr("d", line);              
-        }
+              .attr("class", "linepath")
+              .attr("d", path)
+              .style("opacity", 0)
+              .on("mouseover", function(d) {                
+                console.log(d)
+                scope.hovered = [d];
+                tooltip.html("<font size='2'>" + d["name"] + "</font>");
+                tooltip.style("visibility", "visible");
+                d3.select(this)
+                  .style("stroke-width", 2)
+                  .style('opacity', 1);
+              })
+              .on("mousemove", function(){
+                tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
+              })
+              .on("mouseout", function(d) {
+                tooltip.style("visibility", "hidden");
+                d3.select(this)
+                  .style("stroke-width", 1)
+                  .style('opacity', 0.6);
+              })
+              .transition()
+                .duration(500)
+                .style('opacity', 0.6);
 
-        function addLine(lineData) {
-          svg.select(".y")
+          lines.exit()
             .transition()
             .duration(500)
-            .call(yAxis);
+            .style("opacity", 0)
+            .remove();
 
-          svg.selectAll(".line")
-            .transition()
-            .duration(500)
-            .attr("d", line)
-
-          svg.append("path")
-              .datum(lineData)
-              .attr("class", "line")
-              .attr("d", line)
-              .style("stroke", function() {
-                return color(Math.round(Math.random()*20));
-              })
-              .on("mouseover", function(d) {
-                var currentThis = this;
-                svg.selectAll(".line")
-                  .style("opacity", function(d) {
-                    console.log(currentThis)
-                    console.log(currentThis)
-                    if (currentThis != this)
-                      return 0,5;
-                    else
-                      return 1;
-                  })
-
-              });
+          console.log(lines.exit());
         }
+
+        // function addLine(lineData) {
+        //   svg.select(".y")
+        //     .transition()
+        //     .duration(500)
+        //     .call(yAxis);
+
+        //   svg.selectAll(".linepath")
+        //     .transition()
+        //       .duration(500)
+        //       .attr("d", line)
+
+        //   svg.append("path")
+        //       .datum(lineData)
+        //       .attr("class", "linepath")
+        //       .attr("d", line)
+        //       .style("stroke", function() {
+        //         return color(Math.round(Math.random()*20));
+        //       })
+        //       .on("mouseover", function(d) {
+        //         var currentThis = this;
+        //         svg.selectAll(".line")
+        //           .style("opacity", function(d) {
+        //             console.log(currentThis)
+        //             console.log(currentThis)
+        //             if (currentThis != this)
+        //               return 0,5;
+        //             else
+        //               return 1;
+        //           })
+
+        //       });
+        // }
 
       }
   }
