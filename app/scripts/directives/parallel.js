@@ -23,16 +23,23 @@ angular.module('businessSchoolsApp')
           draw();
         })
 
-        scope.$watch('hover', function() {
-          var hoveredEdlement = data.hover;
-          if (hoveredEdlement == undefined)
-            return;
+        scope.highlightParallel = function(hoveredElelemnt) {
+          // var ho = foreground.selectAll()
+          //   .data([hoveredElelemnt], function(d) { return d.name; });
 
-          var ho = foreground.selectAll()
-            .data(hoveredEdlement);
+          // console.log(ho)
+          var selectedElement = foreground.filter(function(d) {
+            return d.name == hoveredElelemnt.name;
+          })
+          
+          highlightLine(selectedElement.node());
+        }
 
-          console.log(ho)
-        })
+        scope.unHighlightParallel = function() {
+          foreground.style("stroke", "steelblue");
+          d3.selectAll(".circleText")
+                .attr("display", "none");
+        }
 
         // Given a data object and a year (column) retrieves its value according to one metric (default is Current rank)
         function getValue(d, year) {
@@ -159,20 +166,13 @@ angular.module('businessSchoolsApp')
             .on("mouseover", function(d) {
                   tooltip.html("<font size='2'>" + d["name"] + "</font>");
                   tooltip.style("visibility", "visible");
-                  d3.select(this).style("stroke", "red");
-                  var sel = d3.select(this);
-                  sel.moveToFront();
+                  
+                  try {
+                    scope.highlightLineChart(d);
+                  } catch(err) {                    
+                  }
 
-                  var circles = d3.selectAll(".circleText")
-                    .attr("display", true)
-                    .attr("transform", function(p){              
-                      return "translate("+x(p)+"," + y[p](getValue(d, p)) + ")"
-                    })
-
-                  circles.selectAll("text")
-                    .text(function(p) {
-                      return (getValue(d, p) == 101) ? "-" : getValue(d, p) + ""
-                    })
+                  highlightLine(this);
               })
               .on("mousemove", function(){
                 // d3.event must be used to retrieve pageY and pageX. While this is not needed in Chrome, it is needed in Firefox
@@ -180,10 +180,15 @@ angular.module('businessSchoolsApp')
               })
               .on("mouseout", function(){
                   tooltip.style("visibility", "hidden");
-                  d3.select(this).style("stroke", "steelblue");
-                 d3.selectAll(".circleText")
+                d3.select(this).style("stroke", "steelblue");
+                d3.selectAll(".circleText")
                       .attr("display", "none")
-                });
+
+                try {
+                  scope.unHighlightLineChart();
+                } catch(err) {                    
+                }                
+              });
 
           // Add a group element for each dimension.
           var g = svg.selectAll(".dimension")
@@ -345,6 +350,24 @@ angular.module('businessSchoolsApp')
           
         }
 
+        function highlightLine(svgContainer) {
+          console.log(svgContainer)
+          var d = d3.select(svgContainer).data()[0];
+          d3.select(svgContainer).style("stroke", "red");
+          var sel = d3.select(svgContainer);
+          sel.moveToFront();
+
+          var circles = d3.selectAll(".circleText")
+            .attr("display", true)
+            .attr("transform", function(p) {
+              return "translate("+x(p)+"," + y[p](getValue(d, p)) + ")"
+            })
+
+          circles.selectAll("text")
+            .text(function(p) {
+              return (getValue(d, p) == 101) ? "-" : getValue(d, p) + ""
+            })
+        }
       }
     };
   });

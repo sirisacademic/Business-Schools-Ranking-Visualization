@@ -51,6 +51,29 @@ angular.module('businessSchoolsApp')
           console.log("Queden " + numLines)
         }
 
+        scope.highlightLineChart = function(hoveredElelemnt) {
+          // var ho = foreground.selectAll()
+          //   .data([hoveredElelemnt], function(d) { return d.name; });
+
+          // console.log(ho)
+          var lines = svg.selectAll(".linepath");
+          console.log(lines)
+          var selectedElement = lines.filter(function(d) {
+            return d.name == hoveredElelemnt.name;
+          })
+
+          console.log(selectedElement)
+          
+          highlightLine(selectedElement.node());
+        }
+
+        scope.unHighlightLineChart = function() {
+          d3.selectAll(".linepath")
+            .style("stroke", "#87907D")
+            .style("stroke-width", 1)
+            .style('opacity', 0.6);
+        }
+
         var tooltip = d3.select("#tooltip");
 
         var margin = {top: 20, right: 80, bottom: 20, left: 80},
@@ -164,13 +187,11 @@ angular.module('businessSchoolsApp')
               .attr("d", path)
               .style("opacity", 0)
               .on("mouseover", function(d) {                
-                console.log(d)
-                scope.hovered = [d];
+                scope.highlightParallel(d);
+                
                 tooltip.html("<font size='2'>" + d["name"] + "</font>");
                 tooltip.style("visibility", "visible");
-                d3.select(this)
-                  .style("stroke-width", 2)
-                  .style('opacity', 1);
+                highlightLine(this);    
               })
               .on("mousemove", function(){
                 tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
@@ -180,6 +201,8 @@ angular.module('businessSchoolsApp')
                 d3.select(this)
                   .style("stroke-width", 1)
                   .style('opacity', 0.6);
+
+                scope.unHighlightParallel(); 
               })
               .transition()
                 .duration(500)
@@ -192,6 +215,13 @@ angular.module('businessSchoolsApp')
             .remove();
 
           console.log(lines.exit());
+        }
+
+        function highlightLine(svgElement) {
+          d3.select(svgElement)
+              .style("stroke", "green")
+              .style("stroke-width", 2)
+              .style('opacity', 1);
         }
 
         // function addLine(lineData) {
