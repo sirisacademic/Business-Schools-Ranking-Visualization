@@ -57,7 +57,7 @@ angular.module('businessSchoolsApp')
 
           // console.log(ho)
           var lines = svg.selectAll(".linepath");
-          console.log(lines)
+          
           var selectedElement = lines.filter(function(d) {
             return d.name == hoveredElelemnt.name;
           })

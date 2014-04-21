@@ -10,7 +10,14 @@ angular.module('businessSchoolsApp')
     $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
     $scope.width = 960 - $scope.margin.left - $scope.margin.right;
     $scope.height = 420 - $scope.margin.top - $scope.margin.bottom;
+    $scope.rankingMetric = 'Current rank'; // the metric to use in the rankings
 
+    d3.selection.prototype.moveToFront = function() {
+        return this.each(function(){
+        this.parentNode.appendChild(this);
+      });
+    };
+        
     var tooltip = d3.select("#tooltip")
             .style("visibility", "hidden")
             .style("background-color", "#ffffff");

@@ -14,20 +14,15 @@ angular.module('businessSchoolsApp')
       // scope: { chartdata: '=' },
       // controller: 'KeywordsCtrl',
       link: function (scope, element, attrs) {
-
+        var filterText = "";
         var data = [];
         scope.$watch('data', function() {
-          // console.log(scope.data);
           data = scope.data;
-          // data = [data[0], data[1], data[2]]
           draw();
         })
 
-        scope.highlightParallel = function(hoveredElelemnt) {
-          // var ho = foreground.selectAll()
-          //   .data([hoveredElelemnt], function(d) { return d.name; });
-
-          // console.log(ho)
+        // highlighted the corresponding element given a datum
+        scope.highlightParallel = function(hoveredElelemnt) {          
           var selectedElement = foreground.filter(function(d) {
             return d.name == hoveredElelemnt.name;
           })
@@ -43,7 +38,7 @@ angular.module('businessSchoolsApp')
 
         // Given a data object and a year (column) retrieves its value according to one metric (default is Current rank)
         function getValue(d, year) {
-          return (!(year in d.data)) ? 101 : d.data[year]['Current rank'];
+          return (!(year in d.data)) ? 101 : d.data[year][scope.rankingMetric];
         }        
 
         var tooltip = d3.select("#tooltip");
@@ -76,13 +71,6 @@ angular.module('businessSchoolsApp')
             countries, 
             selectedCountry = "All";
 
-        d3.selection.prototype.moveToFront = function() {
-            return this.each(function(){
-            this.parentNode.appendChild(this);
-          });
-        };
-
-
         // d3.csv("shanghai_ranking.csv", function(data) {
         function draw() {
 
@@ -101,12 +89,12 @@ angular.module('businessSchoolsApp')
             if (a.data['2014'] == undefined && b.data['2014'] == undefined) {
               aValue = bValue = 0;
               scope.dimensions.forEach(function(d) {
-                aValue += (a.data[d] == undefined) ? 1000 : a.data[d]['Current rank'];
-                bValue += (b.data[d] == undefined) ? 1000 : b.data[d]['Current rank'];
+                aValue += (a.data[d] == undefined) ? 1000 : a.data[d][scope.rankingMetric];
+                bValue += (b.data[d] == undefined) ? 1000 : b.data[d][scope.rankingMetric];
               })
             } else {
-              aValue = (a.data['2014'] == undefined) ? 101 : a.data['2014']['Current rank'];
-              bValue = (b.data['2014'] == undefined) ? 101 : b.data['2014']['Current rank'];
+              aValue = (a.data['2014'] == undefined) ? 101 : a.data['2014'][scope.rankingMetric];
+              bValue = (b.data['2014'] == undefined) ? 101 : b.data['2014'][scope.rankingMetric];
             }
             return aValue - bValue;
           })
@@ -119,7 +107,12 @@ angular.module('businessSchoolsApp')
             return d.country;
           })));
 
-          // console.log(countries)
+
+          d3.select("#input_school")
+            .on("keyup", function(d) {
+              filterText = this.value;
+              filterByName();
+            })
 
           d3.select("#countriesCombo")
             .on( "change", function(d) {
@@ -293,13 +286,35 @@ angular.module('businessSchoolsApp')
             return d3.select(this).style("display") != "none";
           });
 
+          console.log("currentlyVisible: " + currentlyVisible[0].length)
+
           foreground.style("display", function(d) {
             return currentlyVisible.every(function(p, i) {  
               if (selectedCountry == "All")
-                return true;
+                return d['name'].toLowerCase().indexOf(filterText) > -1;
               else
-                return d["country"].localeCompare(selectedCountry) == 0;
+                return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
                 // return d["country"] == selectedCountry ?????? NOT WORKING!!!????!!???
+            }) ? null : "none";
+          });
+
+          manageFilteredElements();
+        }
+
+        function filterByName() {  
+          var currentlyVisible = foreground.filter(function() {
+            // console.log(d3.select(this).style("display"))
+            return d3.select(this).style("display") != "none";
+          });
+
+          console.log("currentlyVisible: " + currentlyVisible[0].length)
+
+          foreground.style("display", function(d) {
+            return currentlyVisible.every(function(p, i) {
+              if (selectedCountry == "All")
+                return d['name'].toLowerCase().indexOf(filterText) > -1;
+              else
+                return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
             }) ? null : "none";
           });
 
@@ -351,7 +366,6 @@ angular.module('businessSchoolsApp')
         }
 
         function highlightLine(svgContainer) {
-          console.log(svgContainer)
           var d = d3.select(svgContainer).data()[0];
           d3.select(svgContainer).style("stroke", "red");
           var sel = d3.select(svgContainer);

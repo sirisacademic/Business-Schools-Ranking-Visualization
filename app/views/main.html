@@ -1,19 +1,27 @@
-<div class="row">
-  <!-- <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul> -->
+<!-- <div class="row">
   <h3 class="text-muted">Business Schools Explorer</h3>
+</div> -->
+<div class="row">
+  <h3>Business Schools Explorer <small>Global Ranking</small></h3>
 </div>
 
 <div class="row">
-  <div>
+  <div class="col-lg-3">
       Choose a contry
       <select id="countriesCombo" class="combobox">
         <option value="All" selected>All</option>
       </select>
+  </div>
+  <div class="col-lg-6">
+  </div>
+  <div class="col-lg-3">
+    <div class="input-group input-group-sm">      
+      <input type="text" class="form-control" placeholder="School name" id="input_school">
+      <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
     </div>
+  </div>
+</div>
+<div class="row">  
   <parallel></parallel>
   <!-- <div class="panel panel-default">
     
