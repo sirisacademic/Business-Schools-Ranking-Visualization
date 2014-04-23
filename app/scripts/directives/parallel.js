@@ -292,8 +292,23 @@ angular.module('businessSchoolsApp')
             return currentlyVisible.every(function(p, i) {  
               if (selectedCountry == "All")
                 return d['name'].toLowerCase().indexOf(filterText) > -1;
-              else
+              else {
+                // the following code is very cumbersome. As indexOf is not working (WHY??), we need to split multinational schools and check country by contry using localCompare
+                if (d["country"].indexOf("/") > -1) {
+                  var cs = d["country"].split('/');
+                  var exist = cs.some(function(p) {
+                    if (p.trim().localeCompare(selectedCountry) == 0) {
+                      console.log("Trobat pais " + p.trim())
+                      console.log(d['name'].toLowerCase().indexOf(filterText) > -1)
+                      return true;
+                    }
+                  })
+
+                  if (exist) return d['name'].toLowerCase().indexOf(filterText) > -1;
+                }
+                  // console.log(d["country"].split('/'))
                 return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
+              }
                 // return d["country"] == selectedCountry ?????? NOT WORKING!!!????!!???
             }) ? null : "none";
           });
@@ -333,7 +348,7 @@ angular.module('businessSchoolsApp')
             
           foreground.style("display", function(d) {    
             return actives.every(function(p, i) {      
-              var bool =  extents[i][0] <= getValue(d, p) && getValue(d, p) <= extents[i][1];
+              var bool =  extents[i][0] <= getValue(d, p) && getValue(d, p) <= extents[i][1] && d['name'].toLowerCase().indexOf(filterText) > -1;
               bool = bool && (selectedCountry == "All" || d["country"].localeCompare(selectedCountry) == 0);
             
               return bool;
