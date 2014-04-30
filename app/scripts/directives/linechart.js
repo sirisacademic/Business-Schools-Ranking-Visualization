@@ -76,7 +76,7 @@ angular.module('businessSchoolsApp')
 
         var tooltip = d3.select("#tooltip");
 
-        var margin = {top: 20, right: 80, bottom: 20, left: 80},
+        var margin = {top: 20, right: 30, bottom: 20, left: 30},
             width = scope.width - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 

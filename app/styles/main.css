@@ -176,3 +176,8 @@ body {
   stroke: #87907D;
   stroke-width: 1px;
 }
+
+/***********/
+.nav, .pagination, .carousel a {
+  cursor: pointer;
+ }

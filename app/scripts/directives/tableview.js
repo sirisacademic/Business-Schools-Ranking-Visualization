@@ -43,7 +43,7 @@ angular.module('businessSchoolsApp')
 
         d3.select('#tablediv')
           // .style("width", scope.width - scope.margin.left - scope.margin.right  + "px");
-          .style("width", scope.width - scope.margin.left - scope.margin.right - 30 + "px")
+          .style("width", scope.width - scope.margin.left - scope.margin.right - 55 + "px")
           .style("margin-left", scope.margin.left + 28 + "px"); 
 
         function draw() {

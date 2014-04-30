@@ -282,9 +282,6 @@ angular.module('businessSchoolsApp')
               else 
                 d.filter_country = d["country"].localeCompare(selectedCountry) == 0;
 
-            console.log(d.filter_brush)
-            console.log(d.filter_country && d.filter_brush  && d.filter_name)
-
             return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
           });
 

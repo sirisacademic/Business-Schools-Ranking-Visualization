@@ -29,9 +29,9 @@ angular.module('businessSchoolsApp')
             .style("visibility", "hidden")
             .style("background-color", "#ffffff");
       
-    d3.select('#tabbedpane')
-      .style("width", $scope.width - $scope.margin.left - $scope.margin.right - 30 + "px")
-      .style("margin-left", $scope.margin.left + 10 + "px");
+    // d3.select('#tabbedpane')
+    //   .style("width", $scope.width - $scope.margin.left - $scope.margin.right - 30 + "px")
+    //   .style("margin-left", $scope.margin.left + 10 + "px");
 
     d3.selectAll("li")
       .on("click", function(d) {
