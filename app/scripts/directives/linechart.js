@@ -122,6 +122,7 @@ angular.module('businessSchoolsApp')
             .orient("left");
 
         var line = d3.svg.line()
+            .defined(function(d) { return d > 0; })
             .x(function(d, i) { return x(scope.dimensions[i]); })
             .y(function(d) { return y(d); })
             .interpolate("monotone");
@@ -199,6 +200,7 @@ angular.module('businessSchoolsApp')
               .on("mouseout", function(d) {
                 tooltip.style("visibility", "hidden");
                 d3.select(this)
+                  .style("stroke", "#87907D")
                   .style("stroke-width", 1)
                   .style('opacity', 0.6);
 
