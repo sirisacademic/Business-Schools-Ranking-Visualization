@@ -47,7 +47,7 @@ angular.module('businessSchoolsApp')
             y = {},
             dragging = {};        
 
-        var line = d3.svg.line()          
+        var line = d3.svg.line()
                   .interpolate("monotone"),
             axisLeft = d3.svg.axis()
                     .orient("left")
@@ -98,15 +98,10 @@ angular.module('businessSchoolsApp')
             }
             return aValue - bValue;
           })
-          // data.sort(function(a,b) {
-          //     return a["2013"] - b["2013"];
-          //   });
-
           
           countries = d3.keys(d3.set(data.map(function(d) {
             return d.country;
           })));
-
 
           d3.select("#input_school")
             .on("keyup", function(d) {
@@ -117,10 +112,7 @@ angular.module('businessSchoolsApp')
           d3.select("#countriesCombo")
             .on( "change", function(d) {
               selectedCountry = $("#countriesCombo").find('option:selected').val();
-              if (getActiveDimensions().length > 0)
-                brush();
-              else
-                filterByCountry(d);
+              filterByCountry(d);
             })
             .selectAll("option")
             .data(countries.sort())
@@ -280,28 +272,20 @@ angular.module('businessSchoolsApp')
           return line(scope.dimensions.map(function(p) { return [position(p), y[p](getValue(d, p))]; }));          
         }
 
-        function filterByCountry() {  
-          var currentlyVisible = foreground.filter(function() {
-            // console.log(d3.select(this).style("display"))
-            return d3.select(this).style("display") != "none";
-          });
-
-          console.log("currentlyVisible: " + currentlyVisible[0].length)
-
+        function filterByCountry() {
           foreground.style("display", function(d) {
-            return currentlyVisible.every(function(p, i) {  
-              if (selectedCountry == "All")
-                return d['name'].toLowerCase().indexOf(filterText) > -1;
-              else {                
-                if (d["country"].indexOf("/") > -1) {
-                  if (checkMultiCountryBS(d))
-                    return true;
-                }
-                  // console.log(d["country"].split('/'))
-                return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
-              }
-                // return d["country"] == selectedCountry ?????? NOT WORKING!!!????!!???
-            }) ? null : "none";
+            if (selectedCountry == "All")
+              d.filter_country = true;
+            else
+              if (d["country"].indexOf("/") > -1) 
+                d.filter_country = checkMultiCountryBS(d);
+              else 
+                d.filter_country = d["country"].localeCompare(selectedCountry) == 0;
+
+            console.log(d.filter_brush)
+            console.log(d.filter_country && d.filter_brush  && d.filter_name)
+
+            return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
           });
 
           manageFilteredElements();
@@ -323,26 +307,12 @@ angular.module('businessSchoolsApp')
         }
 
         function filterByName() {  
-          // var currentlyVisible = foreground.filter(function() {
-          //   // console.log(d3.select(this).style("display"))
-          //   return d3.select(this).style("display") != "none";
-          // });
-
-          // console.log("currentlyVisible: " + currentlyVisible[0].length)
-
           foreground.style("display", function(d) {
-            // return currentlyVisible.every(function(p, i) {
-              if (selectedCountry == "All")
-                return (d['name'].toLowerCase().indexOf(filterText) > -1) ? null : "none";
-              else
-                return (d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1) ? null : "none";
-            // }) ? null : "none";
+            d.filter_name = d['name'].toLowerCase().indexOf(filterText) > -1;
+
+            return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
           });
 
-          var actives = getActiveDimensions();
-
-          // if (actives.length > 0)
-          //   brush();
           manageFilteredElements();
         }
 
@@ -355,20 +325,21 @@ angular.module('businessSchoolsApp')
           var actives = getActiveDimensions(),
               extents = actives.map(function(p) { return y[p].brush.extent(); });
 
-            
-          foreground.style("display", function(d) {    
-            return actives.every(function(p, i) {      
-              var bool =  extents[i][0] <= getValue(d, p) && getValue(d, p) <= extents[i][1] && d['name'].toLowerCase().indexOf(filterText) > -1;
-              bool = bool && (selectedCountry == "All" || d["country"].localeCompare(selectedCountry) == 0);
-            
-              return bool;
-            }) ? null : "none";
-          });
+          if (actives.length == 0) {
+            foreground.style("display", function(d) {    
+                d.filter_brush = true;
+                return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
+            });
+          } else {
+            foreground.style("display", function(d) {    
+              d.filter_brush = actives.every(function(p, i) {      
+                return extents[i][0] <= getValue(d, p) && getValue(d, p) <= extents[i][1];
+              });
+              return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
+            });
+          } 
 
-          if (actives.length == 0 && selectedCountry != "All")
-            filterByCountry();
-          else
-            manageFilteredElements();
+          manageFilteredElements();
         }
 
         function manageFilteredElements() {

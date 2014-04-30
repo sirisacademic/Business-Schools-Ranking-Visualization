@@ -4,6 +4,13 @@ angular.module('businessSchoolsApp')
   .controller('MainCtrl', function ($scope, $compile, data) {
     $scope.data = data;
     console.log(data)
+
+    data.forEach(function(d) {
+      d.filter_country = true;
+      d.filter_brush = true;
+      d.filter_name = true;
+    })
+    
     // Extract the list of scope.dimensions and create a scale for each.
     $scope.dimensions = d3.range(1999,2015);
 
