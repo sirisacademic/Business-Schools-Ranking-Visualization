@@ -33,11 +33,12 @@ angular.module('businessSchoolsApp')
     //   .style("width", $scope.width - $scope.margin.left - $scope.margin.right - 30 + "px")
     //   .style("margin-left", $scope.margin.left + 10 + "px");
 
-    d3.selectAll("li")
+    var tabbedPane = d3.select("#tabbedpane")
+    tabbedPane.selectAll("li")
       .on("click", function(d) {
         var selected = d3.select(this);
-        d3.select(".active")
-            .classed("active", false)
+        tabbedPane.select(".active")
+          .classed("active", false)
         d3.select(this)
           .classed("active", true)
         
