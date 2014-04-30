@@ -292,19 +292,10 @@ angular.module('businessSchoolsApp')
             return currentlyVisible.every(function(p, i) {  
               if (selectedCountry == "All")
                 return d['name'].toLowerCase().indexOf(filterText) > -1;
-              else {
-                // the following code is very cumbersome. As indexOf is not working (WHY??), we need to split multinational schools and check country by contry using localCompare
+              else {                
                 if (d["country"].indexOf("/") > -1) {
-                  var cs = d["country"].split('/');
-                  var exist = cs.some(function(p) {
-                    if (p.trim().localeCompare(selectedCountry) == 0) {
-                      console.log("Trobat pais " + p.trim())
-                      console.log(d['name'].toLowerCase().indexOf(filterText) > -1)
-                      return true;
-                    }
-                  })
-
-                  if (exist) return d['name'].toLowerCase().indexOf(filterText) > -1;
+                  if (checkMultiCountryBS(d))
+                    return true;
                 }
                   // console.log(d["country"].split('/'))
                 return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
@@ -316,23 +307,42 @@ angular.module('businessSchoolsApp')
           manageFilteredElements();
         }
 
-        function filterByName() {  
-          var currentlyVisible = foreground.filter(function() {
-            // console.log(d3.select(this).style("display"))
-            return d3.select(this).style("display") != "none";
-          });
+        // the following code is very cumbersome. As indexOf is not working (WHY??), we need to split multinational schools and check country by contry using localCompare
+        function checkMultiCountryBS(d) {
+          var cs = d["country"].split('/');
+          var exist = cs.some(function(p) {
+            if (p.trim().localeCompare(selectedCountry) == 0) {
+              console.log("Trobat pais " + p.trim())
+              console.log(d['name'].toLowerCase().indexOf(filterText) > -1)
+              return true;
+            } else
+              return false;
+          })
 
-          console.log("currentlyVisible: " + currentlyVisible[0].length)
+          return exist
+        }
+
+        function filterByName() {  
+          // var currentlyVisible = foreground.filter(function() {
+          //   // console.log(d3.select(this).style("display"))
+          //   return d3.select(this).style("display") != "none";
+          // });
+
+          // console.log("currentlyVisible: " + currentlyVisible[0].length)
 
           foreground.style("display", function(d) {
-            return currentlyVisible.every(function(p, i) {
+            // return currentlyVisible.every(function(p, i) {
               if (selectedCountry == "All")
-                return d['name'].toLowerCase().indexOf(filterText) > -1;
+                return (d['name'].toLowerCase().indexOf(filterText) > -1) ? null : "none";
               else
-                return d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1;
-            }) ? null : "none";
+                return (d["country"].localeCompare(selectedCountry) == 0 && d['name'].toLowerCase().indexOf(filterText) > -1) ? null : "none";
+            // }) ? null : "none";
           });
 
+          var actives = getActiveDimensions();
+
+          // if (actives.length > 0)
+          //   brush();
           manageFilteredElements();
         }
 
