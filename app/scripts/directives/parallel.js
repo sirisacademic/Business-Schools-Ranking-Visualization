@@ -36,6 +36,17 @@ angular.module('businessSchoolsApp')
                 .attr("display", "none");
         }
 
+        scope.clearBrushes = function() {
+          console.log("Clear brushes")
+          var actives = getActiveDimensions();
+          console.log("Active brushes: " + actives.length)
+
+          d3.selectAll(".brush").each(function(d) {
+            d3.select(this).call(y[d].brush.clear());
+          });
+          brush();
+        }
+
         // Given a data object and a year (column) retrieves its value according to one metric (default is Current rank)
         function getValue(d, year) {
           return (!(year in d.data)) ? 101 : d.data[year][scope.rankingMetric];
@@ -75,7 +86,7 @@ angular.module('businessSchoolsApp')
         function draw() {
 
           // Extract the list of scope.dimensions and create a scale for each.
-          scope.dimensions = d3.range(1999,2015);
+          scope.dimensions = d3.range(2000,2015);
           x.domain(scope.dimensions);
           scope.dimensions.forEach(function(d) {
             y[d] = d3.scale.linear()        
