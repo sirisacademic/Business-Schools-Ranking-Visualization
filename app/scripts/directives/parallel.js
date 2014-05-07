@@ -80,8 +80,6 @@ angular.module('businessSchoolsApp')
             countries,
             selectedCountry = "All Countries";
 
-        
-
         d3.select("#input_school")
           .on("keyup", function(d) {
             filterText = this.value;
@@ -90,9 +88,25 @@ angular.module('businessSchoolsApp')
 
         // d3.csv("shanghai_ranking.csv", function(data) {
         function draw() {
-          countries = d3.keys(d3.set(data.map(function(d) {
-            return d.country;
-          })));
+
+          // create a country list that splits those BS that belong to more than one country
+          var countryList = [];
+          data.forEach(function(d) {
+            if (d.country.indexOf("/")) {
+              var values = d.country.split("/");
+              values.forEach(function(p) {
+                countryList.push(p.trim())
+              })
+            } else 
+              countryList.push(d);
+          })
+          // countries = d3.keys(d3.set(data.map(function(d) {
+          //   return d.country;
+          // })));
+
+          countries = d3.keys(d3.set(countryList))
+          console.log(countryList)
+          console.log(countries)
 
           d3.select("#countriesCombo")      
             .selectAll("option")
@@ -294,6 +308,7 @@ angular.module('businessSchoolsApp')
 
         // the following code is very cumbersome. As indexOf is not working (WHY??), we need to split multinational schools and check country by contry using localCompare
         function checkMultiCountryBS(d) {
+          console.log(d)
           var cs = d["country"].split('/');
           var exist = cs.some(function(p) {
             if (p.trim().localeCompare(selectedCountry) == 0) {
@@ -339,6 +354,10 @@ angular.module('businessSchoolsApp')
               return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
             });
           } 
+
+          d3.select("#clearBrushesBtn").attr("disabled", function() {
+            return (actives.length > 0) ? null : "";
+          })
 
           manageFilteredElements();
         }
