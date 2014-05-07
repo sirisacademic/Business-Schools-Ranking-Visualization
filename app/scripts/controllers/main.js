@@ -9,8 +9,9 @@ angular.module('businessSchoolsApp')
     })
 
     // Extract the list of scope.dimensions and create a scale for each.
-    $scope.dimensions = d3.range(1999,2015);
+    $scope.dimensions = d3.range(2000,2015);
 
+    // Set proper margins, width and height
     $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
     $scope.width = 960 - $scope.margin.left - $scope.margin.right;
     $scope.height = 420 - $scope.margin.top - $scope.margin.bottom;
@@ -32,16 +33,19 @@ angular.module('businessSchoolsApp')
       return aValue - bValue;
     })    
     
+    // saving the loaded data into the scope so the directives can draw it
     $scope.data = data;
     console.log(data);
 
+    // extending selections with the ability to be moved in front of the rest
     d3.selection.prototype.moveToFront = function() {
         return this.each(function(){
         this.parentNode.appendChild(this);
       });
     };
         
-    var tooltip = d3.select("#tooltip")
+
+    $scope.tooltip = d3.select("#tooltip")
             .style("visibility", "hidden")
             .style("background-color", "#ffffff");
       

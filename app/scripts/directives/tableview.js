@@ -52,7 +52,9 @@ angular.module('businessSchoolsApp')
           var rows = d3.select("tbody").selectAll("tr")
             .data(activeRows)
             .enter()
-            .append("tr");
+            .append("tr")
+            .on("mouseover", function(d) { scope.highlightParallel(d); })
+            .on("mouseout", function(d) { scope.unHighlightParallel(); });
             // .style("background-color", function(d,i) {
             //   return (i%2 == 0) ? "white" : "#F0F0F0";
             // });
@@ -73,19 +75,19 @@ angular.module('businessSchoolsApp')
             })
             .enter()
             .append("td")
-            .attr("class", function(d, i) {
-              return (i > 1) ? "centeredTd" : null;
-            })
-            .style("font", function(d, i) {
-              if (i == scope.dimensions.length + 1)
-                return "italic bold";
-            })
-            .style("background-color", function(d, i) {  
-              return (d == 0) ? color(101) : color(d); 
-            })
-            .text(function(d, i) {
-              return (d == 0) ? "-" : d;
-            });
+              .attr("class", function(d, i) {
+                return (i > 1) ? "centeredTd" : null;
+              })
+              .style("font", function(d, i) {
+                if (i == scope.dimensions.length + 1)
+                  return "italic bold";
+              })
+              .style("background-color", function(d, i) {  
+                return (d == 0) ? color(101) : color(d); 
+              })
+              .text(function(d, i) {
+                return (d == 0) ? "-" : d;
+              });
         }
       }
     };

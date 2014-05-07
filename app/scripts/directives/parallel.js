@@ -50,8 +50,6 @@ angular.module('businessSchoolsApp')
           return (!(year in d.data)) ? 101 : d.data[year][scope.rankingMetric];
         }        
 
-        var tooltip = d3.select("#tooltip");
-
         var x = d3.scale.ordinal().rangePoints([0, scope.width], 1),
             y = {},
             dragging = {};        
@@ -126,10 +124,6 @@ angular.module('businessSchoolsApp')
                 filterByCountry(selectedCountry);
               })
               
-
-
-          // Extract the list of scope.dimensions and create a scale for each.
-          scope.dimensions = d3.range(2000,2015);
           x.domain(scope.dimensions);
           scope.dimensions.forEach(function(d) {
             y[d] = d3.scale.linear()        
@@ -165,8 +159,9 @@ angular.module('businessSchoolsApp')
                 return color(d);
               })
             .on("mouseover", function(d) {
-                  tooltip.html("<font size='2'>" + d["name"] + "</font>");
-                  tooltip.style("visibility", "visible");
+                  scope.tooltip
+                      .html("<font size='2'>" + d["name"] + "</font>")
+                      .style("visibility", "visible");
                   
                   try {
                     scope.highlightLineChart(d);
@@ -177,10 +172,10 @@ angular.module('businessSchoolsApp')
               })
               .on("mousemove", function(){
                 // d3.event must be used to retrieve pageY and pageX. While this is not needed in Chrome, it is needed in Firefox
-                tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
+                scope.tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
               })
               .on("mouseout", function(){
-                  tooltip.style("visibility", "hidden");
+                scope.tooltip.style("visibility", "hidden");
                 d3.select(this).style("stroke", "steelblue");
                 d3.selectAll(".circleText")
                       .attr("display", "none")

@@ -74,8 +74,6 @@ angular.module('businessSchoolsApp')
             .style('opacity', 0.6);
         }
 
-        var tooltip = d3.select("#tooltip");
-
         var margin = {top: 20, right: 30, bottom: 20, left: 30},
             width = scope.width - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
@@ -190,15 +188,16 @@ angular.module('businessSchoolsApp')
               .on("mouseover", function(d) {                
                 scope.highlightParallel(d);
                 
-                tooltip.html("<font size='2'>" + d["name"] + "</font>");
-                tooltip.style("visibility", "visible");
+                scope.tooltip
+                    .html("<font size='2'>" + d["name"] + "</font>")
+                    .style("visibility", "visible");
                 highlightLine(this);    
               })
               .on("mousemove", function(){
-                tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
+                scope.tooltip.style("top", (d3.event.pageY - 20)+"px").style("left",(d3.event.pageX )+"px");        
               })
               .on("mouseout", function(d) {
-                tooltip.style("visibility", "hidden");
+                scope.tooltip.style("visibility", "hidden");
                 d3.select(this)
                   .style("stroke", "#87907D")
                   .style("stroke-width", 1)
