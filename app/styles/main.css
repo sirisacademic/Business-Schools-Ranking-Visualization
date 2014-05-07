@@ -203,3 +203,7 @@ body {
 .dropdown-menu a {
     font: 12px sans-serif;
 }
+
+.highlighted-row tr {
+    border: 1px solid black;
+}

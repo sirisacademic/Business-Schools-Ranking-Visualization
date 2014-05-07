@@ -23,6 +23,9 @@ angular.module('businessSchoolsApp')
 
         d3.select("#tablediv")
           .attr("height", 300 + "px")
+          // .style("width", scope.width - scope.margin.left - scope.margin.right  + "px");
+          .style("width", scope.width - scope.margin.left - scope.margin.right - 57 + "px")
+          .style("margin-left", scope.margin.left + 28 + "px"); 
 
         d3.selectAll("thead tr").selectAll("th")
             .data(['Name', 'Country'].concat(scope.dimensions))
@@ -41,11 +44,6 @@ angular.module('businessSchoolsApp')
             .domain([101, 1])
             .range(["white", "#7BBF6A"]);
 
-        d3.select('#tablediv')
-          // .style("width", scope.width - scope.margin.left - scope.margin.right  + "px");
-          .style("width", scope.width - scope.margin.left - scope.margin.right - 55 + "px")
-          .style("margin-left", scope.margin.left + 28 + "px"); 
-
         function draw() {
           d3.select("tbody").selectAll("tr").remove();
 
@@ -53,8 +51,18 @@ angular.module('businessSchoolsApp')
             .data(activeRows)
             .enter()
             .append("tr")
-            .on("mouseover", function(d) { scope.highlightParallel(d); })
-            .on("mouseout", function(d) { scope.unHighlightParallel(); });
+              .on("mouseover", function(d) { 
+                scope.highlightParallel(d); 
+                d3.select(this)
+                  .select("td")
+                    .style("font-weight", "bold")
+              })
+              .on("mouseout", function(d) { 
+                scope.unHighlightParallel(); 
+                d3.select(this)
+                  .select("td")
+                    .style("font-weight", "normal")
+              });
             // .style("background-color", function(d,i) {
             //   return (i%2 == 0) ? "white" : "#F0F0F0";
             // });
