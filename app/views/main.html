@@ -4,19 +4,99 @@
 <div class="row">
   <h3>Business Schools Explorer <small>Global MBA Ranking</small></h3>
 </div>
+<!-- <div class="row">
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="">Brand</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+          <form class="navbar-form navbar-left" role="search">
+          <div class="input-group-sm">
+            <div class="group-btn">
+              Choose a country
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>              
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </button>
+              <button class="btn btn-default align-left" type="button" style="width:200px">All</button>            
+            </div>
+          </div>
+          </form>
+        </li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</div> -->
+
 
 <div class="row">
   
-  <div class="col-lg-4">    
-    
-    <label class="control-label">Choose a country</label>
+  <div class="col-lg-4"> 
+    <div class="btn-group">
+      <button type="button" class="btn btn-default dropdown-toggle btn-sm btn-gray" data-toggle="dropdown">
+        <span class="caret"></span> Show
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>      
+      <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"  style="width:220px" id="countriesButton">All Countries</button>
+      <ul class="dropdown-menu scrollable-menu" role="menu" id="countriesCombo">        
+        <li><a value="All">All Countries</a></li>
+        <li class="divider"></li>
+      </ul>
+    </div>   
+
+   <!--  <p>Choose a country</p>
     <select class="combobox" id="countriesCombo">
       <option value="All" selected>All</option>
-    </select>
+    </select> -->
 
   </div>
-  <div class="col-lg-4">
-    
+  <div class="col-lg-4 col-centered">
+    <button type="submit" class="btn btn-default btn-sm center-block" id="clearBrushesBtn" style="width:180px">Clear all filters</button>    
   </div>
   <div class="col-lg-4">
     <div class="input-group input-group-sm navbar-right" style="width:300px">      

@@ -177,7 +177,21 @@ body {
   stroke-width: 1px;
 }
 
-/***********/
+/**** Bootstrap patches *******/
 .nav, .pagination, .carousel a {
   cursor: pointer;
  }
+
+ a {
+  cursor: pointer;
+ }
+
+.btn-gray {
+    background-color: #ebebeb
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}

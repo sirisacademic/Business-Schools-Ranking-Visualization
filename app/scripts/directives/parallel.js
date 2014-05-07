@@ -41,9 +41,7 @@ angular.module('businessSchoolsApp')
           var actives = getActiveDimensions();
           console.log("Active brushes: " + actives.length)
 
-          d3.selectAll(".brush").each(function(d) {
-            d3.select(this).call(y[d].brush.clear());
-          });
+          d3.selectAll(".brush").each(function(d) { d3.select(this).call(y[d].brush.clear()); });
           brush();
         }
 
@@ -79,11 +77,44 @@ angular.module('businessSchoolsApp')
             .attr('transform', 'translate(' + scope.margin.left + ',' + scope.margin.top + ')')          
 
         var filtered, 
-            countries, 
-            selectedCountry = "All";
+            countries,
+            selectedCountry = "All Countries";
+
+        
+
+        d3.select("#input_school")
+          .on("keyup", function(d) {
+            filterText = this.value;
+            filterByName();
+          })
 
         // d3.csv("shanghai_ranking.csv", function(data) {
         function draw() {
+          countries = d3.keys(d3.set(data.map(function(d) {
+            return d.country;
+          })));
+
+          d3.select("#countriesCombo")      
+            .selectAll("option")
+            .data(countries.sort())
+            .enter()
+              .append("li")              
+              .append("a")
+                // .attr("href", function() { return ''; })
+                .attr("value", function(d) { return d;})
+                .text(function(d) { return d;});
+
+          d3.select("#countriesCombo")
+            .selectAll("li")
+              .on("click", function(d) {
+                // selectedCountry = $("#countriesCombo").find('option:selected').val();
+                selectedCountry = d3.select(this).selectAll("a").text()
+                d3.select("#countriesButton").text(selectedCountry);
+                selectedCountry = selectedCountry;
+                filterByCountry(selectedCountry);
+              })
+              
+
 
           // Extract the list of scope.dimensions and create a scale for each.
           scope.dimensions = d3.range(2000,2015);
@@ -92,45 +123,7 @@ angular.module('businessSchoolsApp')
             y[d] = d3.scale.linear()        
                 .domain([1, 101])
                 .range([0, scope.height]);
-          })
-            
-          // elements are sorted according their position in the ranking in 2014. If they are not on 2014's ranking, they are sorted according their sum of ranks along the rest of the years
-          data.sort(function(a, b) {
-            var aValue, bValue;
-            if (a.data['2014'] == undefined && b.data['2014'] == undefined) {
-              aValue = bValue = 0;
-              scope.dimensions.forEach(function(d) {
-                aValue += (a.data[d] == undefined) ? 1000 : a.data[d][scope.rankingMetric];
-                bValue += (b.data[d] == undefined) ? 1000 : b.data[d][scope.rankingMetric];
-              })
-            } else {
-              aValue = (a.data['2014'] == undefined) ? 101 : a.data['2014'][scope.rankingMetric];
-              bValue = (b.data['2014'] == undefined) ? 101 : b.data['2014'][scope.rankingMetric];
-            }
-            return aValue - bValue;
-          })
-          
-          countries = d3.keys(d3.set(data.map(function(d) {
-            return d.country;
-          })));
-
-          d3.select("#input_school")
-            .on("keyup", function(d) {
-              filterText = this.value;
-              filterByName();
-            })
-
-          d3.select("#countriesCombo")
-            .on( "change", function(d) {
-              selectedCountry = $("#countriesCombo").find('option:selected').val();
-              filterByCountry(d);
-            })
-            .selectAll("option")
-            .data(countries.sort())
-            .enter()
-            .append("option")
-              .attr("value", function(d) { return d;})
-              .text(function(d) { return d;})     
+          })     
 
           var nElements = data.length,
               strokeWidth = scope.height / nElements,
@@ -285,7 +278,7 @@ angular.module('businessSchoolsApp')
 
         function filterByCountry() {
           foreground.style("display", function(d) {
-            if (selectedCountry == "All")
+            if (selectedCountry == "All Countries")
               d.filter_country = true;
             else
               if (d["country"].indexOf("/") > -1) 
