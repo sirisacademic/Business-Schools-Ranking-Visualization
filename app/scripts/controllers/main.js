@@ -2,14 +2,28 @@
 
 angular.module('businessSchoolsApp')
   .controller('MainCtrl', function ($scope, $compile, data) {    
+    // Extract the list of scope.dimensions and create a scale for each.
+    $scope.dimensions = d3.range(2000,2015);
+    var yearData;
+
+    console.dir(data);
+
     data.forEach(function(d) {
       d.filter_country = true;
       d.filter_brush = true;
       d.filter_name = true;
-    })
 
-    // Extract the list of scope.dimensions and create a scale for each.
-    $scope.dimensions = d3.range(2000,2015);
+      // console.dir(d)
+      $scope.dimensions.forEach(function(p) {
+        if (p in d.data) {
+          yearData = d.data[p];
+          // research_doctorate_criteria (20) = FT research rank (10) + Faculty with doctorates (5) + FT doctoral rank (5)
+          yearData['research_doctorate_criteria'] = yearData['FT research rank'] + yearData['Faculty with doctorates (%)'] + yearData['FT doctoral rank'];
+          // international_criteria (20) = International mobility (6) + International faculty (4) + International students (4) + International experience index (3) + International board (2) + Languages (1)
+          yearData['international_criteria'] = yearData['International mobility index'] + yearData['International faculty (%)'] + yearData['International students (%)'] + yearData['International experience index'] + yearData['International board (%)'] + yearData['Languages'];
+        }
+      })
+    })    
 
     // Set proper margins, width and height
     $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
@@ -34,8 +48,7 @@ angular.module('businessSchoolsApp')
     })    
     
     // saving the loaded data into the scope so the directives can draw it
-    $scope.data = data;
-    console.log(data);
+    $scope.data = data;    
 
     // extending selections with the ability to be moved in front of the rest
     d3.selection.prototype.moveToFront = function() {
