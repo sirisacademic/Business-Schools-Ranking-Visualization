@@ -105,8 +105,6 @@ angular.module('businessSchoolsApp')
           // })));
 
           countries = d3.keys(d3.set(countryList))
-          console.log(countryList)
-          console.log(countries)
 
           d3.select("#countriesCombo")      
             .selectAll("option")

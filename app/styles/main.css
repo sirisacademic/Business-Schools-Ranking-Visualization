@@ -186,6 +186,10 @@ body {
   cursor: pointer;
  }
 
+/*#mag_glass {
+  cursor: pointer;
+ }*/
+
 .btn-gray {
     background-color: #ebebeb
 }
