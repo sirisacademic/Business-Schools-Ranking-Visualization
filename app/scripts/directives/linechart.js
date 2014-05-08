@@ -62,7 +62,7 @@ angular.module('businessSchoolsApp')
             return d.name == hoveredElelemnt.name;
           })
 
-          console.log(selectedElement)
+          // console.log(selectedElement)
           
           highlightLine(selectedElement.node());
         }
@@ -90,11 +90,8 @@ angular.module('businessSchoolsApp')
             .range([height, 0]);        
 
         function setYAxis() {
-          y.domain([0, d3.max(data, function(d) {
-              return d3.max(d3.values(d.data).map(function(p) {    
-                return (p[scope.metric] == undefined) ? 0 : p[scope.metric];
-              }));
-            })]);
+          console.log("Using max " + scope.maxs[scope.metric])
+          y.domain([0, scope.maxs[scope.metric]]);
           // var max = d3.max(data, function(d) {
           //     return d3.max(d3.values(d.data).map(function(p) {    
           //       return (p[scope.metric] == undefined) ? 0 : p[scope.metric];

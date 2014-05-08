@@ -377,12 +377,7 @@ angular.module('businessSchoolsApp')
 
           d3.select("#numResults")
               .text(scope.activeRows.length + " institutions match the criteria");
-          
-          // console.log("filtered")
-          //console.log(filtered.length)
 
-          //dataTable.fnClearTable();
-          
         }
 
         function highlightLine(svgContainer) {
@@ -401,17 +396,6 @@ angular.module('businessSchoolsApp')
             .text(function(p) {
               return (getValue(d, p) == 101) ? "-" : getValue(d, p) + ""
             })
-        }       
-
-         function printBytes(str) {
-          var bytes = [];
-
-          for (var i = 0; i < str.length; ++i)
-          {
-              bytes.push(str.charCodeAt(i));
-          }
-
-          console.log(bytes);
         }
       }
     };

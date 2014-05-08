@@ -23,7 +23,39 @@ angular.module('businessSchoolsApp')
       //     yearData['international_criteria'] = yearData['International mobility index'] + yearData['International faculty (%)'] + yearData['International students (%)'] + yearData['International experience index'] + yearData['International board (%)'] + yearData['Languages'];
       //   }
       // })
-    })    
+    })
+
+    $scope.maxs = {};
+    $scope.maxs['Weighted salary (US$)'] = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['Weighted salary (US$)'] == undefined) ? 0 : p['Weighted salary (US$)'];
+                                            }));
+                                          });
+    $scope.maxs['Salary percentage increase'] = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['Salary percentage increase'] == undefined) ? 0 : p['Salary percentage increase'];
+                                            }));
+                                          });
+    $scope.maxs['International faculty (%)'] = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['International faculty (%)'] == undefined) ? 0 : p['International faculty (%)'];
+                                            }));
+                                          });
+    $scope.maxs['International students (%)'] = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['International students (%)'] == undefined) ? 0 : p['International students (%)'];
+                                            }));
+                                          });
+    $scope.maxs['Women faculty (%)']          = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['Women faculty (%)'] == undefined) ? 0 : p['Women faculty (%)'];
+                                            }));
+                                          });
+    $scope.maxs['Women students (%)']         = d3.max(data, function(d) {
+                                            return d3.max(d3.values(d.data).map(function(p) {    
+                                              return (p['Women students (%)'] == undefined) ? 0 : p['Women students (%)'];
+                                            }));
+                                          });
 
     // Set proper margins, width and height
     $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
@@ -90,10 +122,10 @@ angular.module('businessSchoolsApp')
                 .attr("id", "wrapper");
 
         console.log(selected)
-        switch (selected.attr("value")) {
+        $scope.metric = selected.attr("value");
+        switch ($scope.metric) {
           case 'Weighted salary (US$)':
             console.log("Weighted selected");
-            $scope.metric = selected.attr("value");
             $('#wrapper').append($compile("<linechart />")($scope));            
             break;
 
@@ -126,7 +158,6 @@ angular.module('businessSchoolsApp')
           //   $('#wrapper').append($compile("<linechart />")($scope));
           //   break;
           default:
-            $scope.metric = selected.attr("value");
             $('#wrapper').append($compile("<linechart />")($scope));
             break;
         }
