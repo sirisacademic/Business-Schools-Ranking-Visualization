@@ -80,7 +80,7 @@ angular.module('businessSchoolsApp')
 
         d3.select("#input_school")
           .on("keyup", function(d) {
-            filterText = this.value;
+            filterText = this.value.toLowerCase();
             filterByName();
           })
 
