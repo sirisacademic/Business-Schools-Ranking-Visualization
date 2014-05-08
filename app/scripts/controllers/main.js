@@ -105,23 +105,27 @@ angular.module('businessSchoolsApp')
             //   .append($compile("<tableview />")($scope));
             $scope.$apply(); 
             break;
-          case 'Value for money ratio':
-            $scope.metric = selected.attr("value");
-            $('#wrapper').append($compile("<linechart />")($scope));
-            break;
-          case 'Women faculty (%)':
-            $scope.metric = selected.attr("value");
-            $('#wrapper').append($compile("<linechart />")($scope));
-            break;
-          case 'Women students (%)':
-            $scope.metric = selected.attr("value");
-            $('#wrapper').append($compile("<linechart />")($scope));
-            break;
-          case 'Employed at three months (%)':
-            $scope.metric = selected.attr("value");
-            $('#wrapper').append($compile("<linechart />")($scope));
-            break;
-          case 'Salary percentage increase':
+          // case 'Value for money ratio':
+          //   $scope.metric = selected.attr("value");
+          //   $('#wrapper').append($compile("<linechart />")($scope));
+          //   break;
+          // case 'Women faculty (%)':
+          //   $scope.metric = selected.attr("value");
+          //   $('#wrapper').append($compile("<linechart />")($scope));
+          //   break;
+          // case 'Women students (%)':
+          //   $scope.metric = selected.attr("value");
+          //   $('#wrapper').append($compile("<linechart />")($scope));
+          //   break;
+          // case 'Employed at three months (%)':
+          //   $scope.metric = selected.attr("value");
+          //   $('#wrapper').append($compile("<linechart />")($scope));
+          //   break;
+          // case 'Salary percentage increase':
+          //   $scope.metric = selected.attr("value");
+          //   $('#wrapper').append($compile("<linechart />")($scope));
+          //   break;
+          default:
             $scope.metric = selected.attr("value");
             $('#wrapper').append($compile("<linechart />")($scope));
             break;
