@@ -75,7 +75,7 @@ angular.module('businessSchoolsApp')
             .attr('transform', 'translate(' + scope.margin.left + ',' + scope.margin.top + ')')          
 
         var filtered, 
-            countries,
+            countries = [],
             selectedCountry = "All Countries";
 
         d3.select("#input_school")
@@ -94,15 +94,25 @@ angular.module('businessSchoolsApp')
               var values = d.country.split("/");
               values.forEach(function(p) {
                 countryList.push(p.trim())
+                // printBytes(p)
               })
-            } else 
+            } else {
               countryList.push(d);
+              // printBytes(d)
+            }
           })
           // countries = d3.keys(d3.set(data.map(function(d) {
           //   return d.country;
           // })));
 
-          countries = d3.keys(d3.set(countryList))
+          var set = d3.set(countryList);
+          console.log(set)
+          set.forEach(function(d) {
+            countries.push(d);
+            // printBytes(d)
+          })
+          // countries = d3.keys(set);
+
 
           d3.select("#countriesCombo")      
             .selectAll("option")
@@ -118,7 +128,7 @@ angular.module('businessSchoolsApp')
             .selectAll("li")
               .on("click", function(d) {
                 // selectedCountry = $("#countriesCombo").find('option:selected').val();
-                selectedCountry = d3.select(this).selectAll("a").text()
+                selectedCountry = d3.select(this).selectAll("a").text().trim()
                 d3.select("#countriesButton").text(selectedCountry);
                 selectedCountry = selectedCountry;
                 filterByCountry(selectedCountry);
@@ -290,8 +300,17 @@ angular.module('businessSchoolsApp')
             else
               if (d["country"].indexOf("/") > -1) 
                 d.filter_country = checkMultiCountryBS(d);
-              else 
-                d.filter_country = d["country"].localeCompare(selectedCountry) == 0;
+              else {
+                // d.filter_country = d["country"].localeCompare(selectedCountry) == 0;
+                // printBytes(selectedCountry);
+                // printBytes(d['country'])
+                // console.log("selectedCountry: " + '_' + selectedCountry + '_')
+                // console.log("d[\"country\"].: " + '_' + d["country"] + '_')
+                // console.log(d["country"] + " === " + selectedCountry.trim())
+                // console.log(d["country"].length + " === " + selectedCountry.length)
+                // console.log(d["country"] === selectedCountry)
+                d.filter_country = d["country"] == selectedCountry;
+              }
 
             return (d.filter_country && d.filter_brush  && d.filter_name) ? null : "none";
           });
@@ -299,20 +318,12 @@ angular.module('businessSchoolsApp')
           manageFilteredElements();
         }
 
-        // the following code is very cumbersome. As indexOf is not working (WHY??), we need to split multinational schools and check country by contry using localCompare
         function checkMultiCountryBS(d) {
-          console.log(d)
           var cs = d["country"].split('/');
-          var exist = cs.some(function(p) {
-            if (p.trim().localeCompare(selectedCountry) == 0) {
-              console.log("Trobat pais " + p.trim())
-              console.log(d['name'].toLowerCase().indexOf(filterText) > -1)
-              return true;
-            } else
-              return false;
-          })
+          for (var i = 0; i<cs.length; i++)
+            cs[i] = cs[i].trim();
 
-          return exist
+          return $.inArray(selectedCountry, cs) > -1
         }
 
         function filterByName() {  
@@ -390,6 +401,17 @@ angular.module('businessSchoolsApp')
             .text(function(p) {
               return (getValue(d, p) == 101) ? "-" : getValue(d, p) + ""
             })
+        }       
+
+         function printBytes(str) {
+          var bytes = [];
+
+          for (var i = 0; i < str.length; ++i)
+          {
+              bytes.push(str.charCodeAt(i));
+          }
+
+          console.log(bytes);
         }
       }
     };
