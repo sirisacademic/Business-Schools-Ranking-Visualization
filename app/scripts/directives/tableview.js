@@ -6,7 +6,7 @@ angular.module('businessSchoolsApp')
       templateUrl: 'views/tabletemplate.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-        console.log("tableview created")
+        // console.log("tableview created")
         var activeRows = [];
 
         scope.$watch('activeRows', function() {
