@@ -111,27 +111,23 @@ def addSchoolData(schoolName, year, country, data):
   #   for y in schools[x]:
   #     print (y,':',schools[x][y])
 
+
 def buildFinalObj():
   finalObj = []
   for key in schools:
     obj = {}
     obj['name'] = key
 
-    # ESCP Europe is set to different countries: France, U.K., Germany, Spain, Italy
-    if key == "ESCP Europe":
-      obj['country'] = 'France'
-    else:
-      if schools[key]['country'] == 'U.S.A.' or schools[key]['country'] == 'USA' or schools[key]['country'] == 'US':
-        obj['country'] = 'U.S.'
-      else:
-        if schools[key]['country'] == 'Uk':
-          obj['country'] = 'U.K.'
-        else:
-          obj['country'] = schools[key]['country']
+    
+    country = replaceUS(schools[key]['country'])
+    country = replaceUK(country)
+    
+    obj['country'] = country
 
     print(obj['country'])
-    schools[key].pop('country', None)
 
+    # removing the 'country' key in the school data
+    schools[key].pop('country', None)
     obj['data'] = schools[key]
     # for years in schools[key]:
     #   obj[years] = schools[key][years]
@@ -139,6 +135,24 @@ def buildFinalObj():
     finalObj.append(obj)
 
   return finalObj
+
+def replaceUS(text):
+  if 'U.S.A.' in text:
+    return text.replace('U.S.A.', 'U.S.')
+  else: 
+    if 'USA' in text:
+      return text.replace('USA', 'U.S.')
+    else:
+      if 'US' in text:
+        return text.replace('US', 'U.S.')
+  
+  return text 
+
+def replaceUK(text):
+  if 'UK' in text:
+    return text.replace('UK', 'U.K.')
+
+  return text
 
 if __name__ == "__main__":
   print("Parser of Excel XMLs by @vpascual\n")
