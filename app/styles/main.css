@@ -119,32 +119,6 @@ body {
   position: absolute;
 }
 
-table {  
-  padding-bottom: 30px;
-  font-size: 10px;
-  color: #111;
-}
-
-tr {
-   line-height: 25px;
-   min-height: 25px;
-   height: 25px;
-}
-
-#tablediv {
-  height: 300px;
-  overflow: auto;
-}
-
-.centeredTd {
-    text-align:center; 
-    vertical-align:middle;
-    color: #343434;
-    /*width: 25px;*/
-    /*font-size: 15px;    */
-}
-
-
 #logo {
   width: 100px;
   height: 62px;
@@ -207,3 +181,36 @@ body {
 .highlighted-row tr {
     border: 1px solid black;
 }
+
+
+/*** TABLE STYLING ***/
+table {  
+  /*padding-bottom: 30px;*/  
+  font-size: 10px;
+  color: #111;
+  table-layout:fixed;
+  margin-bottom: 0px;
+}
+
+tr {
+   line-height: 25px;
+   min-height: 25px;
+   height: 25px;
+}
+
+
+#tablewapper {
+  padding-top: 10px;
+}
+
+#tablediv {
+  /*padding-top: 10px;*/
+  height: 300px;
+  overflow: scroll;
+  overflow-x:hidden;
+}
+
+/*.centeredTd {
+    text-align:center; 
+    vertical-align:middle;
+}*/
