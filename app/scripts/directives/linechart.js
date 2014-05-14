@@ -29,12 +29,12 @@ angular.module('businessSchoolsApp')
         scope.addLine = function (values) {
           console.dir(values);
           var lines = d3.selectAll(".line");
-          console.log("Lenght: " + lines.length)
+          // console.log("Lenght: " + lines.length)
           var arrivingMax = d3.max(values, function(d) { return d.value; });
-          console.log("numLines: " + numLines)
-          console.log(y.domain()[1] + " " + arrivingMax)
+          // console.log("numLines: " + numLines)
+          // console.log(y.domain()[1] + " " + arrivingMax)
           var max = (numLines > 0) ? Math.max(y.domain()[1], arrivingMax) : arrivingMax;
-          console.log("max: " + max)
+          // console.log("max: " + max)
           y.domain([0, max]);
           numLines++;
           addLine(values);
@@ -70,7 +70,7 @@ angular.module('businessSchoolsApp')
         scope.unHighlightLineChart = function() {
           d3.selectAll(".linepath")
             .style("stroke", "#87907D")
-            .style("stroke-width", 1)
+            .style("stroke-width", 1.25)
             .style('opacity', 0.6);
         }
 
@@ -90,7 +90,7 @@ angular.module('businessSchoolsApp')
             .range([height, 0]);        
 
         function setYAxis() {
-          console.log("Using max " + scope.maxs[scope.metric])
+          // console.log("Using max " + scope.maxs[scope.metric])
           y.domain([0, scope.maxs[scope.metric]]);
           // var max = d3.max(data, function(d) {
           //     return d3.max(d3.values(d.data).map(function(p) {    
@@ -197,7 +197,7 @@ angular.module('businessSchoolsApp')
                 scope.tooltip.style("visibility", "hidden");
                 d3.select(this)
                   .style("stroke", "#87907D")
-                  .style("stroke-width", 1)
+                  .style("stroke-width", 1.25)
                   .style('opacity', 0.6);
 
                 scope.unHighlightParallel(); 
@@ -212,7 +212,7 @@ angular.module('businessSchoolsApp')
             .style("opacity", 0)
             .remove();
 
-          console.log(lines.exit());
+          // console.log(lines.exit());
         }
 
         function highlightLine(svgElement) {

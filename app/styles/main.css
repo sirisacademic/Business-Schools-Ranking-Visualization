@@ -148,7 +148,7 @@ body {
 .linepath {
   fill: none;
   stroke: #87907D;
-  stroke-width: 1px;
+  stroke-width: 1.25px;
 }
 
 /**** Bootstrap patches *******/
