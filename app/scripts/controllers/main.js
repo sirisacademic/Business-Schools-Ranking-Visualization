@@ -6,7 +6,7 @@ angular.module('businessSchoolsApp')
     $scope.dimensions = d3.range(2000,2015);
     var yearData;
 
-    console.dir(data);
+    // console.dir(data);
 
     data.forEach(function(d) {
       d.filter_country = true;
@@ -25,12 +25,18 @@ angular.module('businessSchoolsApp')
       // })
     })
 
+    $scope.avgs = {};
+    // d3.max(d3.values(d.data).map(function(p) {    
+    //                                           return (p['Weighted salary (US$)'] == undefined) ? 0 : p['Weighted salary (US$)'];
+    //                                         })
+
     $scope.maxs = {};
     $scope.maxs['Weighted salary (US$)'] = d3.max(data, function(d) {
                                             return d3.max(d3.values(d.data).map(function(p) {    
                                               return (p['Weighted salary (US$)'] == undefined) ? 0 : p['Weighted salary (US$)'];
                                             }));
                                           });
+
     $scope.maxs['Salary percentage increase'] = d3.max(data, function(d) {
                                             return d3.max(d3.values(d.data).map(function(p) {    
                                               return (p['Salary percentage increase'] == undefined) ? 0 : p['Salary percentage increase'];
@@ -100,7 +106,7 @@ angular.module('businessSchoolsApp')
 
     d3.select("#clearBrushesBtn")
       .on("click", function(d) {
-        console.log("Click!!!")
+        // console.log("Click!!!")
         try {
           $scope.clearBrushes();
         } catch(err) {                    
@@ -121,11 +127,11 @@ angular.module('businessSchoolsApp')
               .append("div")
                 .attr("id", "wrapper");
 
-        console.log(selected)
+        // console.log(selected)
         $scope.metric = selected.attr("value");
         switch ($scope.metric) {
           case 'Weighted salary (US$)':
-            console.log("Weighted selected");
+            // console.log("Weighted selected");
             $('#wrapper').append($compile("<linechart />")($scope));            
             break;
 
