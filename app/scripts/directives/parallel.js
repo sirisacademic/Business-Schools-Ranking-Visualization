@@ -37,9 +37,9 @@ angular.module('businessSchoolsApp')
         }
 
         scope.clearBrushes = function() {
-          console.log("Clear brushes")
+          // console.log("Clear brushes")
           var actives = getActiveDimensions();
-          console.log("Active brushes: " + actives.length)
+          // console.log("Active brushes: " + actives.length)
 
           d3.selectAll(".brush").each(function(d) { d3.select(this).call(y[d].brush.clear()); });
           brush();
@@ -106,7 +106,7 @@ angular.module('businessSchoolsApp')
           // })));
 
           var set = d3.set(countryList);
-          console.log(set)
+          // console.log(set)
           set.forEach(function(d) {
             countries.push(d);
             // printBytes(d)
@@ -145,7 +145,7 @@ angular.module('businessSchoolsApp')
               strokeWidth = scope.height / nElements,
               color = d3.scale.category20();
 
-          console.log("strokeWidth: " + strokeWidth)
+          // console.log("strokeWidth: " + strokeWidth)
 
           strokeWidth = (scope.height / nElements) * 0.8;          
 
