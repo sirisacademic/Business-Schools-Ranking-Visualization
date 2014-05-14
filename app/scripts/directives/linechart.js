@@ -15,7 +15,7 @@ angular.module('businessSchoolsApp')
       // controller: 'KeywordsCtrl',
       link: function (scope, element, attrs) {
         var data = scope.activeRows;
-        console.dir(data)
+        // console.dir(data)
         var numLines = 0;
 
         scope.$watch('activeRows', function() {
@@ -105,7 +105,7 @@ angular.module('businessSchoolsApp')
           //   });
           // y.domain([min, max]);
 
-            console.log(y.domain());
+            // console.log(y.domain());
         }
 
         var xAxis = d3.svg.axis()
