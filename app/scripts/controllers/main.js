@@ -31,37 +31,20 @@ angular.module('businessSchoolsApp')
     //                                         })
 
     $scope.maxs = {};
-    $scope.maxs['Weighted salary (US$)'] = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['Weighted salary (US$)'] == undefined) ? 0 : p['Weighted salary (US$)'];
-                                            }));
-                                          });
+    $scope.maxs['Weighted salary (US$)']      = getMaxValueFromMetric('Weighted salary (US$)');
+    $scope.maxs['Salary percentage increase'] = getMaxValueFromMetric('Salary percentage increase');
+    $scope.maxs['International faculty (%)']  = getMaxValueFromMetric('International faculty (%)');
+    $scope.maxs['International students (%)'] = getMaxValueFromMetric('International students (%)');
+    $scope.maxs['Women faculty (%)']          = getMaxValueFromMetric('Women faculty (%)');
+    $scope.maxs['Women students (%)']         = getMaxValueFromMetric('Women students (%)');
 
-    $scope.maxs['Salary percentage increase'] = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['Salary percentage increase'] == undefined) ? 0 : p['Salary percentage increase'];
-                                            }));
-                                          });
-    $scope.maxs['International faculty (%)'] = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['International faculty (%)'] == undefined) ? 0 : p['International faculty (%)'];
-                                            }));
-                                          });
-    $scope.maxs['International students (%)'] = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['International students (%)'] == undefined) ? 0 : p['International students (%)'];
-                                            }));
-                                          });
-    $scope.maxs['Women faculty (%)']          = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['Women faculty (%)'] == undefined) ? 0 : p['Women faculty (%)'];
-                                            }));
-                                          });
-    $scope.maxs['Women students (%)']         = d3.max(data, function(d) {
-                                            return d3.max(d3.values(d.data).map(function(p) {    
-                                              return (p['Women students (%)'] == undefined) ? 0 : p['Women students (%)'];
-                                            }));
-                                          });
+    function getMaxValueFromMetric(metric) {
+      return d3.max(data, function(d) {
+          return d3.max(d3.values(d.data).map(function(p) {    
+            return (p[metric] == undefined) ? 0 : p[metric];
+          }));
+        });
+    }
 
     // Set proper margins, width and height
     $scope.margin = { top: 30, right: 0, bottom: 10, left: 0 };
