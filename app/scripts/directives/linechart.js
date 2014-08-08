@@ -52,10 +52,6 @@ angular.module('businessSchoolsApp')
         }
 
         scope.highlightLineChart = function(hoveredElelemnt) {
-          // var ho = foreground.selectAll()
-          //   .data([hoveredElelemnt], function(d) { return d.name; });
-
-          // console.log(ho)
           var lines = svg.selectAll(".linepath");
           
           var selectedElement = lines.filter(function(d) {
@@ -125,9 +121,6 @@ angular.module('businessSchoolsApp')
         function path(d) {
           return line(d.values);          
         }
-
-        // var zoom = d3.behavior.zoom()
-        //     .on("zoom", draw);
 
         var svg = d3.select(element[0])
           .append("svg")
@@ -221,40 +214,6 @@ angular.module('businessSchoolsApp')
               .style("stroke-width", 2)
               .style('opacity', 1);
         }
-
-        // function addLine(lineData) {
-        //   svg.select(".y")
-        //     .transition()
-        //     .duration(500)
-        //     .call(yAxis);
-
-        //   svg.selectAll(".linepath")
-        //     .transition()
-        //       .duration(500)
-        //       .attr("d", line)
-
-        //   svg.append("path")
-        //       .datum(lineData)
-        //       .attr("class", "linepath")
-        //       .attr("d", line)
-        //       .style("stroke", function() {
-        //         return color(Math.round(Math.random()*20));
-        //       })
-        //       .on("mouseover", function(d) {
-        //         var currentThis = this;
-        //         svg.selectAll(".line")
-        //           .style("opacity", function(d) {
-        //             console.log(currentThis)
-        //             console.log(currentThis)
-        //             if (currentThis != this)
-        //               return 0,5;
-        //             else
-        //               return 1;
-        //           })
-
-        //       });
-        // }
-
       }
   }
 });

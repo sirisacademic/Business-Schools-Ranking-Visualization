@@ -1,6 +1,6 @@
 Siris Business Schools Vis
 ===========================
 
-Visualization of the MBA Ranking of the Financial Times available at http://rankings.ft.com/businessschoolrankings/online-mba-ranking-2014.
+How have rankings changed over time? This tool visualises the long term stability of the top 10 institutions and the large variations of those ranked lower.
 
-The code includes a scrapper in python for the XML file that can be downloaded from the same URL.
+Data source: http://rankings.ft.com/businessschoolrankings/online-mba-ranking-2014
