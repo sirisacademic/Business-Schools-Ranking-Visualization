@@ -2,6 +2,8 @@
 
 var module = angular
   .module('businessSchoolsApp', [
+    'sirislab.siris-tableview',
+    'sirislab.siris-stringUtils',
     'ngResource',
     'ngRoute'
   ])

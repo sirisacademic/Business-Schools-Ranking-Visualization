@@ -369,14 +369,35 @@ angular.module('businessSchoolsApp')
         function manageFilteredElements() {
           // console.log("manageFilteredElements")
           // Get filtered elements
-          scope.activeRows = foreground.filter(function() {
+          var filteredLines = foreground.filter(function() {
             return d3.select(this).style("display") != "none";
-          }).data();         
+          }).data();
+
+          var table_data = [];
+          
+          filteredLines.forEach(function(d) {
+            var obj = {};
+            obj.name = d.name;
+            obj.country = d.country;
+            scope.dimensions.forEach(function(p) {
+              if (d.data[p] == undefined)
+                obj[p] = 101;
+              else
+                obj[p] = d.data[p]['Current rank'];
+            })                  
+              
+            table_data.push(obj);
+          });
+
+          console.dir(table_data)
+          scope.table_data = table_data;
+          scope.activeRows = filteredLines;
+
 
           if(!scope.$$phase) scope.$apply();
 
           d3.select("#numResults")
-              .text(scope.activeRows.length + " institutions match the criteria");
+              .text(scope.table_data.length + " institutions match the criteria");
 
         }
 

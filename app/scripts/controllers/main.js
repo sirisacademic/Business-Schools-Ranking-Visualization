@@ -1,7 +1,47 @@
 'use strict';
 
 angular.module('businessSchoolsApp')
-  .controller('MainCtrl', function ($scope, $compile, data) {    
+  .controller('MainCtrl', function ($scope, $compile, data, $StringUtils) {    
+    //setup some global constants
+    $scope.$root.TABLE_COLUMN_NAME = "name";
+    $scope.$root.TABLE_COLUMN_COUNTRY = "country";
+    $scope.$root.TABLE_COLUMN_2000 = "2000";
+    $scope.$root.TABLE_COLUMN_2001 = "2001";
+    $scope.$root.TABLE_COLUMN_2002 = "2002";
+    $scope.$root.TABLE_COLUMN_2003 = "2003";
+    $scope.$root.TABLE_COLUMN_2004 = "2004";
+    $scope.$root.TABLE_COLUMN_2005 = "2005";
+    $scope.$root.TABLE_COLUMN_2006 = "2006";
+    $scope.$root.TABLE_COLUMN_2007 = "2007";
+    $scope.$root.TABLE_COLUMN_2008 = "2008";
+    $scope.$root.TABLE_COLUMN_2009 = "2009";
+    $scope.$root.TABLE_COLUMN_2010 = "2010";
+    $scope.$root.TABLE_COLUMN_2011 = "2011";
+    $scope.$root.TABLE_COLUMN_2012 = "2012";
+    $scope.$root.TABLE_COLUMN_2013 = "2013";
+    $scope.$root.TABLE_COLUMN_2014 = "2014";
+
+
+    $scope.$root.COLUMN_PROPERTIES = new ColumnsProperties();   
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_NAME,1,7, "left"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_COUNTRY,0,undefined, "left"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2000,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2001,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2002,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2003,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2004,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2005,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2006,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2007,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2008,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2009,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2010,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2011,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2012,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2013,1,undefined, "center"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2014,1,undefined, "center"));
+
+
     // Extract the list of scope.dimensions and create a scale for each.
     $scope.dimensions = d3.range(2000,2015);
     var yearData;
@@ -120,32 +160,12 @@ angular.module('businessSchoolsApp')
 
           case 'Ranking Evolution':
             console.log("Ranking evolution")                        
-            $('#wrapper').append($compile("<tableview />")($scope));
+            $('#wrapper').append($compile("<tableview table_data='table_data' margin='margin' columns-properties='$root.COLUMN_PROPERTIES'></tableview>")($scope));
             // d3.selectAll("#vis")              
             //   .append("div")
             //   .append($compile("<tableview />")($scope));
             $scope.$apply(); 
             break;
-          // case 'Value for money ratio':
-          //   $scope.metric = selected.attr("value");
-          //   $('#wrapper').append($compile("<linechart />")($scope));
-          //   break;
-          // case 'Women faculty (%)':
-          //   $scope.metric = selected.attr("value");
-          //   $('#wrapper').append($compile("<linechart />")($scope));
-          //   break;
-          // case 'Women students (%)':
-          //   $scope.metric = selected.attr("value");
-          //   $('#wrapper').append($compile("<linechart />")($scope));
-          //   break;
-          // case 'Employed at three months (%)':
-          //   $scope.metric = selected.attr("value");
-          //   $('#wrapper').append($compile("<linechart />")($scope));
-          //   break;
-          // case 'Salary percentage increase':
-          //   $scope.metric = selected.attr("value");
-          //   $('#wrapper').append($compile("<linechart />")($scope));
-          //   break;
           default:
             $('#wrapper').append($compile("<linechart />")($scope));
             break;
