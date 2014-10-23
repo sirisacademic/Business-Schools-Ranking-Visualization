@@ -23,7 +23,7 @@ angular.module('businessSchoolsApp')
 
 
     $scope.$root.COLUMN_PROPERTIES = new ColumnsProperties();   
-    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_NAME,1,7, "left"));
+    $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_NAME,1,20, "left"));
     $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_COUNTRY,0,undefined, "left"));
     $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2000,1,undefined, "center"));
     $scope.$root.COLUMN_PROPERTIES.addColumnProperties(new ColumnProperties($scope.$root.TABLE_COLUMN_2001,1,undefined, "center"));

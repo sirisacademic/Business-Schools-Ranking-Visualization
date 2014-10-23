@@ -1,143 +1,69 @@
 <!-- <div class="row">
   <h3 class="text-muted">Business Schools Explorer</h3>
 </div> -->
-<div class="row">
-  <div class="col-xs-11"> <h3>Business Schools Explorer <small>Global MBA Ranking</small></h3></div>
-  <div class="col-xs-1 align-right"><a href="http://www.sirislab.com/tools"><img id="logo" src="images/logo_sirislab.png"></img></a></div>
-</div>
+<div class="container">
 
-<div class="row">
-  <p><strong>How have rankings changed over time?</strong> This tool visualises the long term stability of the top 10 institutions and the large variations of those ranked lower.</p>
-  <p>Each line on the visualization represents the evolution of a Business School according to their MBA programs ranked by the <a href="http://rankings.ft.com/businessschoolrankings/online-mba-ranking-2014">Financial Times</a>. You can select institutions by country, by ranking in a given year or by name. You can also compare selected institutions according to different FT criteria.</p>
-<p>Use the mouse on the vertical axes to filter the institutions per year (for example: institutions ranked between the 40th and the 60th in 2000). Use as many filters as you want!!</p>
-</div>
-<!-- <div class="row">
-  <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="">Brand</a>
-    </div>
+  <!--div class="row">
+    <div class="col-xs-11"> <h3>Business Schools Explorer <small>Global MBA Ranking</small></h3></div>
+    <div class="col-xs-1 align-right"><a href="http://www.sirislab.com/tools"><img id="logo" src="images/logo_sirislab.png"></img></a></div>
+  </div-->
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li>
-          <form class="navbar-form navbar-left" role="search">
-          <div class="input-group-sm">
-            <div class="group-btn">
-              Choose a country
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" tabindex="-1">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>              
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </button>
-              <button class="btn btn-default align-left" type="button" style="width:200px">All</button>            
-            </div>
-          </div>
-          </form>
-        </li>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+  <div style="margin-top:15px; margin-bottom:40px;">
+    <p><strong>How have rankings changed over time?</strong> This tool visualises the long term stability of the top 10 institutions and the large variations of those ranked lower.</p>
+    <p>Each line on the visualization represents the evolution of a Business School according to their MBA programs ranked by the <a href="http://rankings.ft.com/businessschoolrankings/online-mba-ranking-2014">Financial Times</a>. You can select institutions by country, by ranking in a given year or by name. You can also compare selected institutions according to different FT criteria.</p>
+  <p>Use the mouse on the vertical axes to filter the institutions per year (for example: institutions ranked between the 40th and the 60th in 2000). Use as many filters as you want!!</p>
   </div>
-</nav>
-</div> -->
-
-
-<div class="row">
   
-  <div class="col-xs-4"> 
-    <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle btn-sm btn-gray" data-toggle="dropdown">
-        <span class="caret"></span> Show
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>      
-      <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"  style="width:220px" id="countriesButton">All Countries</button>
-      <ul class="dropdown-menu scrollable-menu" role="menu" id="countriesCombo">        
-        <li><a value="All">All Countries</a></li>
-        <li class="divider"></li>
-      </ul>
-    </div>   
+  <div class="row">
+    
+    <div class="col-xs-4"> 
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle btn-sm btn-gray" data-toggle="dropdown">
+          <span class="caret"></span> Show
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>      
+        <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"  style="width:220px" id="countriesButton">All Countries</button>
+        <ul class="dropdown-menu scrollable-menu" role="menu" id="countriesCombo">        
+          <li><a value="All">All Countries</a></li>
+          <li class="divider"></li>
+        </ul>
+      </div>   
 
-   <!--  <p>Choose a country</p>
-    <select class="combobox" id="countriesCombo">
-      <option value="All" selected>All</option>
-    </select> -->
-
-  </div>
-  <div class="col-xs-4 col-centered">
-    <button type="submit" class="btn btn-default btn-sm center-block" id="clearBrushesBtn" style="width:180px" disabled>Clear all filters</button>    
-  </div>
-  <div class="col-xs-4">
-   <div class="input-group input-group-sm navbar-right" style="width:300px">      
-      <input type="text" class="form-control" placeholder="School name" id="input_school">
-      <span class="input-group-addon" id="mag_glass"><span class="glyphicon glyphicon-search"></span></span>
+    </div>
+    <div class="col-xs-4 col-centered">
+      <button type="submit" class="btn btn-default btn-sm center-block" id="clearBrushesBtn" style="width:180px" disabled>Clear all filters</button>    
+    </div>
+    <div class="col-xs-4">
+     <div class="input-group input-group-sm navbar-right" style="width:300px">      
+        <input type="text" class="form-control" placeholder="School name" id="input_school">
+        <span class="input-group-addon" id="mag_glass"><span class="glyphicon glyphicon-search"></span></span>
+      </div>
     </div>
   </div>
-</div>
-<div class="row">  
-  <parallel></parallel>
-</div>
-<div class="row">  
-  <div class="panel-heading" id="numResults"></div>    
-</div>
-<div class="row" id="tabbedpane">
-  <ul class="nav nav-tabs nav-justified">
-    <li value="Ranking Evolution" class="active"><a>Ranking Evolution</a></li>
-    <li value="Weighted salary (US$)"><a>Weighted salary</a></li>
-    <li value="Salary percentage increase"><a>Salary increase</a></li>
-    <li value="International faculty (%)"><a>Int. faculty</a></li>
-    <li value="International students (%)"><a>Int. Students</a></li>
-    <li value="Women faculty (%)"><a>Women faculty</a></li>    
-    <li value="Women students (%)"><a>Women students</a></li>    
-    <!-- <li value="Employed at three months (%)"><a>Employed at 3 months</a></li> -->
-  </ul>  
-</div>
-<div class="row" id="vis">
-  <div id="wrapper">
-    <tableview table_data="table_data" margin="margin" columns-properties="$root.COLUMN_PROPERTIES"></tableview>
+  <div class="row">  
+    <parallel></parallel>
   </div>
-</div>
-<div id="tooltip"></div>
-<div class="footer">
-  <div class="container text-center">
-  <p>Powered by SIRIS Academic  <a href="https://github.com/vpascual/Siris_Business_Schools_Vis"><img src="images/github-icon.png" alt="Fork in Github"></img></a></p>  
-</div>
-</div>
+  <div class="row">  
+    <div class="panel-heading" id="numResults"></div>    
+  </div>
+  <div class="row" id="tabbedpane">
+    <ul class="nav nav-tabs nav-justified">
+      <li value="Ranking Evolution" class="active"><a>Ranking Evolution</a></li>
+      <li value="Weighted salary (US$)"><a>Weighted salary</a></li>
+      <li value="Salary percentage increase"><a>Salary increase</a></li>
+      <li value="International faculty (%)"><a>Int. faculty</a></li>
+      <li value="International students (%)"><a>Int. Students</a></li>
+      <li value="Women faculty (%)"><a>Women faculty</a></li>    
+      <li value="Women students (%)"><a>Women students</a></li>    
+      <!-- <li value="Employed at three months (%)"><a>Employed at 3 months</a></li> -->
+    </ul>  
+  </div>
+  <div class="row" id="vis">
+    <div id="wrapper">
+      <tableview table_data="table_data" margin="margin" columns-properties="$root.COLUMN_PROPERTIES"></tableview>
+    </div>
+  </div>
+  <div id="tooltip"></div>  
+
+
+</div> <!-- end container -->
