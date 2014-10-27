@@ -36,6 +36,25 @@ angular.module('businessSchoolsApp')
                 .attr("display", "none");
         }
 
+
+        //listen for outside events to highligh/unhighlight nodes
+        scope.$root.$on('modifyNode', function(event, data)
+        { 
+          if(data.action == 'highlight')
+          {
+            var selectedElement = foreground.filter(function(d) {
+              return d.name == data.node.name;
+            })          
+            highlightLine(selectedElement.node());
+          }
+          else
+          {
+            foreground.style("stroke", "steelblue");
+            d3.selectAll(".circleText")
+              .attr("display", "none");
+          }
+        });
+
         scope.clearBrushes = function() {
           // console.log("Clear brushes")
           var actives = getActiveDimensions();

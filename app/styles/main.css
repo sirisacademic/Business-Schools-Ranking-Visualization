@@ -183,6 +183,9 @@ body {
 }
 
 
+#tabbedpane a {
+  text-decoration: none;
+}
 /*** TABLE STYLING ***/
 
 /*.centeredTd {
