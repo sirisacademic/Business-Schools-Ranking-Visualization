@@ -25,6 +25,22 @@ module.exports = function (grunt) {
       dist: 'dist'
     },
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // Grunt task to generate index.html from a template
+    // @see https://github.com/mathiasbynens/grunt-template    
+    'template': {
+      'process-html-template': {
+          'options': {
+              'data': {
+                  'now': grunt.template.today('mmmm dd, yyyy')
+              }
+          },
+          'files': {
+              '<%= yeoman.dist %>/index.html': ['<%= yeoman.dist %>/index.html']
+          }
+      }
+    },
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -338,6 +354,19 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
+    },
+
+    'ftp-deploy': {
+      build: {
+        auth: {
+          host: 'www145.your-server.de',
+          port: 21,
+          authKey: 'key1'
+        },
+        src: 'dist/',
+        dest: 'public_html/deploymentlab/rankings/business_schools/global_mba/',
+        exclusions: ['dist/**/.DS_Store', 'dist/**/Thumbs.db', 'dist/tmp']
+      }
     }
   });
 
@@ -384,12 +413,18 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'template'
   ]);
 
   grunt.registerTask('default', [
     'newer:jshint',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build',
+    'ftp-deploy'
   ]);
 };

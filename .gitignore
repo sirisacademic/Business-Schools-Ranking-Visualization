@@ -6,3 +6,4 @@ dist
 *.xml
 *.csv
 *.pyc
+.ftppass
