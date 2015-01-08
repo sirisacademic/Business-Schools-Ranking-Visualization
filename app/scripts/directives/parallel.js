@@ -416,8 +416,7 @@ angular.module('businessSchoolsApp')
           if(!scope.$$phase) scope.$apply();
 
           d3.select("#numResults")
-              .text(scope.table_data.length + " institutions match the criteria");
-
+              .text(scope.table_data.length + " institutions (" + ((scope.table_data.length / scope.data.length)*100).toFixed(1) + "%) match the criteria");
         }
 
         function highlightLine(svgContainer) {
