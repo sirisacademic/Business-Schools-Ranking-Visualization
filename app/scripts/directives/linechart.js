@@ -20,10 +20,10 @@ angular.module('businessSchoolsApp')
 
         scope.$watch('activeRows', function() {
           data = scope.activeRows;           
-          if (data.length > 0) {                                              
+          //if (data.length > 0) {                                              
             setYAxis();
             draw();    
-          }
+          //}
         })
         
         scope.addLine = function (values) {
