@@ -364,7 +364,7 @@ module.exports = function (grunt) {
           authKey: 'key1'
         },
         src: 'dist/',
-        dest: 'public_html/deploymentlab/rankings/business_schools/global_mba/',
+        dest: 'public_html/lab/rankings/business_schools/global_mba/',
         exclusions: ['dist/**/.DS_Store', 'dist/**/Thumbs.db', 'dist/tmp']
       }
     }
