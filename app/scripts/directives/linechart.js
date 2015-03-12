@@ -200,8 +200,8 @@ angular.module('businessSchoolsApp')
                 .style('opacity', 0.6);
 
           lines.exit()
-            .transition()
-            .duration(500)
+            // .transition()
+            // .duration(500)
             .style("opacity", 0)
             .remove();
 
